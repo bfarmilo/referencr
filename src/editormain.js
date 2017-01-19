@@ -22,7 +22,6 @@ class UpdateReference extends React.Component {
 class MyEditor extends React.Component {
 
   exhibitClick(event) {
-    console.log(event.target.id);
     this.props.onUserInput(event.target.id);
   }
 

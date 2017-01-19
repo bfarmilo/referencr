@@ -46,15 +46,14 @@ class App extends Component {
   }
 
   handleNewFile(exhibitKey) {
-    totalHeight = resetHeight;
+    //totalHeight = resetHeight;
     document.body.scrollTop = 0;
-    console.log(`${exhibitKey} handler called, totalHeight = ${totalHeight}`);
+    console.info(`App: new exhibit request received: ${exhibitKey}`);
     this.setState({ activeExhibit: exhibitKey, pages: 2 });
   }
 
   checkScroll(event) {
     scrollPos = document.body.scrollTop;
-    console.info(`scroll position ${scrollPos} / ${totalHeight}`)
     if (status === "ready" && (scrollPos > totalHeight)) {
       status = 'loading';
       this.setState({ pages: (this.state.pages + pageJump) });
@@ -65,7 +64,7 @@ class App extends Component {
     if (totalHeight !== newHeight) {
       totalHeight = newHeight;
       status = "ready";
-      console.info(`window height updated to ${totalHeight}`);
+      console.info(`App: window height update received, now ${totalHeight}`);
     }
   }
 

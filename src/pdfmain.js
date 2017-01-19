@@ -35,7 +35,7 @@ class PDF extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.src !== this.props.src) {
-      console.log(`received new src`);
+      console.log(`PDF: will receive new src`);
       PDFJS.getDocument(nextProps.src).then((pdf) => {
         this.setState({ pdf });
       });
@@ -82,13 +82,13 @@ class Page extends React.Component {
   }
 
   _handleClick(event) {
-    console.log(`${event.type} on tag ${event.target.tagName}`)
+    console.log(`Page: ${event.type} on tag ${event.target.tagName}`)
     if (event.target.tagName === "svg:tspan") {
       let test = clickedLine(event.target);
-      console.log(`${test}`);
+      console.log(`Page: clickedLine on tspan ${test}`);
     } else {
       //something else was clicked, so take the mouse position and hope for the best
-      console.log(`mouse y = ${event.clientY}`)
+      console.log(`Page: mouse y = ${event.clientY}`)
       //need to find nearest line. Note on at least one file the line range is -19/+10 so not symmetric
       //TODO: Better option - disable selection and do your own. 
       // a) disable mousedown/mouseup on anything other than tspans.
@@ -211,14 +211,14 @@ class Viewer extends React.Component {
   componentWillReceiveProps(newProps) {
 
     if (newProps.exhibit !== this.props.exhibit) {
-      console.log(`new exhibit received`);
+      console.log(`Viewer: will receive new exhibit ${newProps.exhibit}`);
       viewheight = [];
       lastdrawn = 0;
       this.setState({ lastload: newProps.pages })
     }
 
     if (newProps.pages !== this.props.pages) {
-      console.log(`fetching up to page ${newProps.pages}`);
+      console.log(`Viewer: will receive new pages, loading up to page ${newProps.pages}`);
       this.setState({ lastload: newProps.pages })
     }
   }
