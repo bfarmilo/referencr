@@ -1,5 +1,5 @@
 import  React  from  'react';
-import exhibits from './referencelist.json';
+import exhibits from '../public/exhibitlist.json';
 
 /*
 class UpdateReference extends React.Component {

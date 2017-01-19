@@ -1,7 +1,7 @@
 import  React  from  'react';
 import  PDFJS  from  'pdfjs-dist/build/pdf.js';
 //import { getPageTextContent } from 'pdfjs-dist/web/pdf_viewer.js'; 
-import exhibits from './referencelist.json';
+import exhibits from '../public/exhibitlist.json';
 //import logo from './logo.svg';
 //import {svgparse, clickedLine} from './svgparse.js';
 import clickedLine from './svgparse.js'

@@ -33,7 +33,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeExhibit: "Ex2015",
+      activeExhibit: "Ex9999",
       pages: 2,
     }
     this.handleNewFile = this.handleNewFile.bind(this);
