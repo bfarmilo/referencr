@@ -234,10 +234,12 @@ class Viewer extends React.Component {
     let { pdf } = this.context
     let numPages = pdf ? pdf.pdfInfo.numPages : 0
     let fingerprint = pdf ? pdf.pdfInfo.fingerprint : 'none'
-    let pages = Array.apply(null, { length: (numPages >= this.props.pages + this.props.offset) ? (this.props.pages) : numPages })
+    let pages = Array.apply(null, { length: (numPages >= this.props.pages + this.props.offset) ? (this.props.pages + this.props.offset) : numPages })
       .map((v, i) => {
-        let startIndex = i + this.props.offset;
-        return (<Page id={`page${startIndex + 1}`} index={startIndex + 1} key={`${fingerprint}-${startIndex}`} hideimages={this.props.hideimages} getPageHeight={this.updateNewHeight} />)
+        if (i<this.props.offset) {
+          return (<div id={`page ${i} not loaded`} key={`skipped-${i}`}></div>)
+        }
+        return (<Page id={`page${i + 1}`} index={i + 1} key={`${fingerprint}-${i}`} hideimages={this.props.hideimages} getPageHeight={this.updateNewHeight} />)
       });
     if (lastdrawn !== this.state.lastload) {
       lastdrawn = this.state.lastload;
