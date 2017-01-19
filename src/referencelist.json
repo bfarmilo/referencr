@@ -1,0 +1,1027 @@
+{
+    "Ex9999": {
+        "path": "/Ex9999.pdf",
+        "title": "1-bit Color test",
+        "exhibit": "9999",
+        "offset": 0
+
+    },
+    "Ex2015": {
+        "path": "/Ex2015.pdf",
+        "author": "DED Andrews",
+        "title": "Amazon v. PMC final Decision",
+        "exhibit": 2015,
+        "type": "ruling",
+        "offset": 0
+    },
+    "Ex2050": {
+        "path": "/Ex2050.pdf",
+        "author": "Harvey",
+        "title": "Patent Application Ser. No. 08/485,507",
+        "alias": "'81 patent application",
+        "exhibit": 2050,
+        "type": "application",
+        "offset": 0
+    },
+    "Ex2135": {
+        "path": "/Ex2135.pdf",
+        "author": "Harvey",
+        "title": "Patent Application Ser. No. 08/449,413",
+        "alias": "'87 patent application",
+        "exhibit": 2135,
+        "type": "application",
+        "offset": 223
+    },
+    "Ex2001": {
+        "author": "",
+        "title": "Declaration Of Alfred C. Weaver, Ph.D., In Support Of Patent Owner’s Preliminary Response",
+        "exhibit": 2001,
+        "alias": "Weaver Declaration in support of POR",
+        "offset": 0
+    },
+
+    "Ex2002": {
+        "author": "",
+        "title": "Curriculum Vitae of Dr. Alfred C. Weaver",
+        "exhibit": 2002,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2003": {
+        "author": "",
+        "title": "Transcript of Depositions of Anthony Wechselberger, Amazon v.PMC, IPR2014-01532 (June 2-3 and August 25, 2014)",
+        "exhibit": 2003,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2004": {
+        "author": "",
+        "title": "PMC’s Appeal Brief in Reexam. of U.S. Pat. No. 4,965,825, Control No. 90/006,536 (January 29, 2007)",
+        "exhibit": 2004,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2005": {
+        "author": "",
+        "title": "PMC’s Reply Brief in Reexam. of U.S. Pat. No. 5,335,277, Control No. 90/006,536 & 90/006,698 (November 10, 2008)",
+        "exhibit": 2005,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2006": {
+        "author": "",
+        "title": "PMC’s Appeal Brief in Reexam. of U.S. Pat. No. 5,335,277, Control No. 90/006,536 & 90/006,698 (August 16, 2006)",
+        "exhibit": 2006,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2007": {
+        "author": "",
+        "title": "Board Decision in Reexam. of U.S. Pat. No. 5,335,277, Control No. 90/006,536 (January 19, 2010)",
+        "exhibit": 2007,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2008": {
+        "author": "",
+        "title": "Order (Dkt. No. 715) in Pegasus Dev. Corp. et al. v. DirecTV, Inc. et al., C.A. No. 00-1020 (D. Del. May 15, 2013)",
+        "exhibit": 2008,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2009": {
+        "author": "",
+        "title": "Board Decision in Reexam. of U.S. Pat. No. 4,965,825, Control No. 90/006,536 (December 19, 2008)",
+        "exhibit": 2009,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2010": {
+        "author": "",
+        "title": "Expert Declaration Of Anthony J. Wechselberger In Support Of Defendants’ Principal Opening Brief On Claim Construction (Dkt. No. 159) in Broadcast Innovation, LLC v. Echostar Communications Corp, Hughes Electronics Corp, DirecTV, Thomson Multimedia, Dotcast, Pegasus Satellite Television Inc. C.A. No. 01-WY-2201 (D. Col. Sept. 16, 2002)",
+        "exhibit": 2010,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2011": {
+        "path": "/Ex2011.pdf",
+        "author": "",
+        "title": "U.S. Pat. No. 4,893,248 to Pitts",
+        "exhibit": 2011,
+        "alias": "Pitts",
+        "offset": 17
+    },
+
+    "Ex2012": {
+        "author": "",
+        "title": "Excerpt from Joint Claim Construction Chart (Dkt. No. 170) in PMC v. Apple, C.A. 2:15-cv-01366, (E.D. Tex. June 14, 2016)",
+        "exhibit": 2012,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2013": {
+        "author": "",
+        "title": "Excerpts from 1981 New Collegiate Dictionary, definitions of “designate” and “locate”",
+        "exhibit": 2013,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2014": {
+        "author": "",
+        "title": "Decision, Institution of Inter Partes Review for IPR2013-00217, U.S. Patent No. 7,162,549 (September 10, 2013)",
+        "exhibit": 2014,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2915": {
+        "author": "",
+        "title": "Information Disclosure Statement in Application No. 08/485,507 (September 5, 1995)",
+        "exhibit": 2915,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2016": {
+        "author": "",
+        "title": "Information Disclosure Statement in Application No. 08/485,507 (December 22, 2011)",
+        "exhibit": 2016,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2017": {
+        "author": "",
+        "title": "Preliminary Amendment in Application No. 08/485,507 (June 7, 1995)",
+        "exhibit": 2017,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2018": {
+        "author": "",
+        "title": "Notice of Allowance in Application No. 08/460,793 (July 10, 2013)",
+        "exhibit": 2018,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2019": {
+        "author": "",
+        "title": "Notice of Allowance in Application No. 08/487,649 (October 8, 2013)",
+        "exhibit": 2019,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2020": {
+        "author": "",
+        "title": "“Decision On Appeal” in Ex Parte Reexamination Control 90/006,536 (of U.S. Patent 4,965,825) (December 19, 2008)",
+        "exhibit": 2020,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2021": {
+        "author": "",
+        "title": "“Decision On Appeal” in Ex Parte Reexamination Control Nos. 90/006,563 & 90/006,698 (of U.S. Patent 5,335,277) (January 19, 2010)",
+        "exhibit": 2021,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2022": {
+        "author": "",
+        "title": "Declaration Of Alfred C. Weaver, Ph.D., In Support Of Patent Owner’s Response",
+        "exhibit": 2022,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2023": {
+        "author": "",
+        "title": "Memorandum Opinion and Order (Dkt. 246) in PMC v. Apple, C.A. 2:15-cv-01366, (E.D. Tex. June 14, 2016)",
+        "exhibit": 2023,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2024": {
+        "author": "Harvey and Cuddihey",
+        "title": "U.S. Patent No. 8,752,088",
+        "exhibit": 2024,
+        "alias": "",
+        "offset": 0
+    },
+    "Ex2025": {
+        "author": "Hisashi Kaneko and Tatsuo Ishiguro",
+        "title": " Digital Television Transmission Using Bandwith Compression Techniques, IEEE Communications Magazine, July 1980, pp. 14-22",
+        "exhibit": 2025,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2026": {
+        "author": "John Free",
+        "title": " High-Resolution TV – Here come wide-screen crystal-clear pictures, Popular Science, Nov. 1981, pp. 108-110",
+        "exhibit": 2026,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2027": {
+        "author": "",
+        "title": "Definition of “instruction” from Webster’s Ninth NewCollegiate Dictionary 1988 ",
+        "exhibit": 2027,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2028": {
+        "author": "",
+        "title": "Definition of “instruction” from Computer Dictionary Fourth Edition, 1985",
+        "exhibit": 2028,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2029": {
+        "author": "",
+        "title": "Definition of “execute” from Computer Dictionary and Handbook Third Edition, 1980",
+        "exhibit": 2029,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2030": {
+        "author": "E.S. Busby",
+        "title": " Principles of Digital Television Simplified, Journal of the SMPTE, July 1975, pp. 542-545",
+        "exhibit": 2030,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2031": {
+        "author": "David A. Howell",
+        "title": " A Primer on Digital Television, Journal of the SMPTE, July 1975, pp. 538-540",
+        "exhibit": 2031,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2032": {
+        "author": "Gwyneth Davies Heynes",
+        "title": " Digital Television – A Glossary and Bibliography, SMPTE Journal, January 1977, pp. 6-9",
+        "exhibit": 2032,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2033": {
+        "author": "Leonard S. Golding",
+        "title": " Quality Assessment of Digital Television Signals, SMPTE Journal, March 1978, pp. 153-157",
+        "exhibit": 2033,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2034": {
+        "author": "Jonathan H. Stott",
+        "title": " Design Technique for Multiplexing Asynchronous Digital Video and Audio Signals, IEEE Transactions on Communications, May 1978, pp. 601-610",
+        "exhibit": 2034,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2035": {
+        "author": "Toshio Koga",
+        "title": " Statistical Performance Analysis of an Interframe Encoder for Broadcast Television Signals, IEEE Transactions on Communications, Dec. 1981, pp. 1868-1876",
+        "exhibit": 2035,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2036": {
+        "author": "Farhard A. Kamangar and K.R. Rao",
+        "title": " Interfield Hybrid Coding of Component Color Television Signals, IEEE Transactions on Communications, Dec. 1981, pp. 1740-1753",
+        "exhibit": 2036,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2037": {
+        "author": "A.N. Netravali and J.D. Robbins",
+        "title": " Motion-Compensated Television Coding: Part I, The Bell System Technical Journal, March 1979, pp. 631-670",
+        "exhibit": 2037,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2038": {
+        "author": "A.N. Netravali and J.A. Stuller",
+        "title": " Motion-Compensated Transform Coding, The Bell System Technical Journal, Sept. 1979, pp. 1703-1718",
+        "exhibit": 2038,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2039": {
+        "author": "John O. Limb",
+        "title": " Digital Coding of Color Video Signals – A Review, IEEE Transactions on Communications, Nov. 1977, pp. 1349-1385",
+        "exhibit": 2039,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2040": {
+        "author": "Izumi Horikawa",
+        "title": " Design and Performances of a 200 Mbit/s 16 QAM Digital Radio System, IEEE Transactions on Communications, Dec. 1979, pp. 1953-1958",
+        "exhibit": 2040,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2041": {
+        "author": "Philippe Dupuis",
+        "title": " 16 QAM Modulation for High Capacity Digital Radio System, IEEE Transactions on Communications, Dec. 1979, pp. 1771-1782",
+        "exhibit": 2041,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2042": {
+        "author": "Shozo Komaki",
+        "title": " Characteristics of a High Capacity 16 QAM Digital Radio System in Multipath Fading, IEEE Transactions on Communications, Dec. 1979, pp. 1854-1861",
+        "exhibit": 2042,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2043": {
+        "author": "M. Nannicini",
+        "title": " Temperature Controlled Predistortion Circuits for 64 QAM Microwave Power Amplifiers, 1985 IEEE MTT-S Digest, pp. 99-102",
+        "exhibit": 2043,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2044": {
+        "author": "A. Giavarini and F. Marconi",
+        "title": " Low Noise Microwave Integrated Receiver for 64 QAM Digital Radio, 1986 16th European Microwave Conference, pp. 168-173",
+        "exhibit": 2044,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2045": {
+        "author": "F.J. Witt",
+        "title": " 64-QAM Digitalization of an Analogue Microwave Radio Network, 1986 16th European Microwave Conference, pp. 53-58",
+        "exhibit": 2045,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2046": {
+        "author": "Kuang-Tsan Wu and Kamilo Feher",
+        "title": " 256-QAM Modem Performance in Distorted Channels, IEEE Transactions on Communications, May 1985, pp. 487-491",
+        "exhibit": 2046,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2051": {
+        "author": "Harvey et al.",
+        "title": "U.S. Patent 4,965,825",
+        "exhibit": 2051,
+        "alias": "Harvey",
+        "offset": 0
+    },
+
+    "Ex2052": {
+        "author": "",
+        "title": "U.S. Patent 4,233,628 ",
+        "exhibit": 2052,
+        "alias": "Ciciora",
+        "offset": 0
+    },
+
+    "Ex2053": {
+        "author": "",
+        "title": "CBS Rulemaking Petition to FCC (1980)",
+        "exhibit": 2053,
+        "alias": "CBS",
+        "offset": 0
+    },
+
+    "Ex2054": {
+        "author": "Blatt et al.",
+        "title": " “The Promise of Teletext for Hearing-Impaired Audiences,” IEEE Transactions on Consumer Electronics, Vol. CE-26:717-722 (November 1980) ",
+        "exhibit": 2054,
+        "alias": "Blatt",
+        "offset": 0
+    },
+
+    "Ex2055": {
+        "author": "",
+        "title": "U.K. Patent 1,370,535 ",
+        "exhibit": 2055,
+        "alias": "Millar",
+        "offset": 0
+    },
+
+    "Ex2056": {
+        "author": "",
+        "title": "U.S. Patent 4,306,250 ",
+        "exhibit": 2056,
+        "alias": "Summers",
+        "offset": 0
+    },
+
+    "Ex2057": {
+        "author": "Chambers",
+        "title": " “Enhanced UK Teletext Moves Towards Still Pictures,” BBC Research Department Report BBC RD 1980/4, June 1980, reprinted in IEEE Transactions on Consumer Electronics, Vol. CE-26: 527-554 (August 1980)",
+        "exhibit": 2057,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2058": {
+        "author": "",
+        "title": "U.S. Patent 4,538,174 ",
+        "exhibit": 2058,
+        "alias": "Gargini",
+        "offset": 0
+    },
+
+    "Ex2059": {
+        "author": "Crowther",
+        "title": "“Teletext and Viewdata Systems and Their Possible Extension To Europe and USA,” IEEE Transactions on Consumer Electronics, Vol. CE-25:288-294 (July 1979)",
+        "exhibit": 2059,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2060": {
+        "author": "Gunn & Harper",
+        "title": " “A Public Broadcaster’s View of Teletext in the United States,” March 26-28, 1980 Conference, London",
+        "exhibit": 2060,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2061": {
+        "author": "Hedger et al.",
+        "title": " “Telesoftware – Value Added Teletext,” IEEE Transactions on Consumer Electronics, Vol. CE-26:555-567 (August 1980) ",
+        "exhibit": 2061,
+        "alias": "Hedger",
+        "offset": 0
+    },
+
+    "Ex2062": {
+        "author": "Viewdata and Videotext 1980-81: A Worldwide Report",
+        "title": " Transcript of Viewdata ’80 Conference, London, March 26-28, 1980",
+        "exhibit": 2062,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2063": {
+        "author": "Ciciora et al",
+        "title": " “An Introduction To Teletext and Viewdata With Comments on Compatibility,” IEEE Transactions on Consumer Electronics, Vol. CE-25:235-245 ",
+        "exhibit": 2063,
+        "alias": "Ciciora article",
+        "offset": 0
+    },
+
+    "Ex2064": {
+        "author": "E.C. Sedman",
+        "title": " The Use of MicroCobol for Telesoftware, VIDEOTEX, VIEWDATA, & TELETEXT – A TRANSCRIPT OF THE ONLINE CONFERENCE ON VIDEOTEX, VIEWDATA, & TELETEXT (Online Publications Ltd., 1980) ",
+        "exhibit": 2064,
+        "alias": "Sedman",
+        "offset": 0
+    },
+
+    "Ex2065": {
+        "author": "",
+        "title": "U.S. Patent 4,751,578 ",
+        "exhibit": 2065,
+        "alias": "Reiter",
+        "offset": 0
+    },
+
+    "Ex2066": {
+        "author": "Fedida",
+        "title": " Viewdata 1, Wireless World, Vol. 83:32-36 (February 1977)",
+        "exhibit": 2066,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2067": {
+        "author": "Fedida",
+        "title": " Viewdata 2, Wireless World, Vol. 83:52-54 (March 1977)",
+        "exhibit": 2067,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2068": {
+        "author": "Fedida",
+        "title": " Viewdata 3, Wireless World, Vol. 83:65-69 (April 1977)",
+        "exhibit": 2068,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2069": {
+        "author": "Fedida",
+        "title": " Viewdata 4, Wireless World, Vol. 83:55-59 (May 1977)",
+        "exhibit": 2069,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2070": {
+        "author": "Gecsei",
+        "title": " Jan, The Architecture of Videotex Systems, Prentice-Hall, Inc., 1983",
+        "exhibit": 2070,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2071": {
+        "author": "Daniel Nachbar",
+        "title": " When Network File Systems Aren’t Enough: Automatic Software Distribution Revisited, USENIX Association Summer Conference Proceedings, 1986",
+        "exhibit": 2071,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2072": {
+        "author": "",
+        "title": "U.S. Patent No.4,788,637 ",
+        "exhibit": 2072,
+        "alias": "Tamaru",
+        "offset": 0
+    },
+
+    "Ex2073": {
+        "author": "",
+        "title": "U.S. Patent No. 4,558,413 ",
+        "exhibit": 2073,
+        "alias": "Schmidt",
+        "offset": 0
+    },
+
+    "Ex2074": {
+        "author": "John Hedger",
+        "title": " Telesoftware, Wireless World (November 1978) ",
+        "exhibit": 2074,
+        "alias": "Hedger",
+        "offset": 0
+    },
+
+    "Ex2075": {
+        "author": "",
+        "title": "U.S. Patent No. 4,138,718 ",
+        "exhibit": 2075,
+        "alias": "Toke",
+        "offset": 0
+    },
+
+    "Ex2076": {
+        "author": "",
+        "title": "U.S. Patent No. 4,359,631 ",
+        "exhibit": 2076,
+        "alias": "Lockwood",
+        "offset": 0
+    },
+
+    "Ex2077": {
+        "author": "",
+        "title": "The NABU Network Specification 50-90020490 (June 8 1984) ",
+        "exhibit": 2077,
+        "alias": "NABU Specification",
+        "offset": 0
+    },
+
+    "Ex2078": {
+        "author": "John Hughes",
+        "title": " The NABU Concept – Distributed Data Processing Via Cable Networks, CCTA 1982 Convention (June 1982) ",
+        "exhibit": 2078,
+        "alias": "Hughes",
+        "offset": 0
+    },
+
+    "Ex2079": {
+        "author": "",
+        "title": "NABU Personal Computer User’s Guide (Nabu Manufacturing Corp. 1983)",
+        "exhibit": 2079,
+        "alias": "the NABU Guide",
+        "offset": 0
+    },
+    "Ex2080": {
+        "author": "",
+        "title": "Virtual Inventory: Electronic Distribution of Software RELease 1.0 (September 12, 1983) (formerly The Rosen Electronic Newsletter) ",
+        "exhibit": 2080,
+        "alias": "Rosen",
+        "offset": 0
+    },
+    "Ex2081": {
+        "author": "",
+        "title": "U.S. Patent No. 4,025,851 ",
+        "exhibit": 2081,
+        "alias": "Haselwood",
+        "offset": 0
+    },
+
+    "Ex2082": {
+        "author": "",
+        "title": "U.S. Patent No. 4,660,170 ",
+        "exhibit": 2082,
+        "alias": "Hui",
+        "offset": 0
+    },
+
+    "Ex2083": {
+        "author": "",
+        "title": "U.S. Patent No. 4,658,093 ",
+        "exhibit": 2083,
+        "alias": "Hellman",
+        "offset": 0
+    },
+
+    "Ex2084": {
+        "author": "Peter Heinicke",
+        "title": " A Multiple Node Software Development Environment, IEEE Transactions on Nuclear Science, Vol. NS-34, No. 4 (August 1987) ",
+        "exhibit": 2084,
+        "alias": "Heinicke",
+        "offset": 0
+    },
+
+    "Ex2085": {
+        "author": "",
+        "title": "U.S. Patent No. 4,245,245 ",
+        "exhibit": 2085,
+        "alias": "Matsumoto",
+        "offset": 0
+    },
+
+    "Ex2086": {
+        "author": "",
+        "title": "U.S. Patent No. 4,099,024 ",
+        "exhibit": 2086,
+        "alias": "Boggs",
+        "offset": 0
+    },
+
+    "Ex2087": {
+        "author": "European Patent Application No. EP0166441 (published January 2",
+        "title": " 1986) ",
+        "exhibit": 2087,
+        "alias": "Caine",
+        "offset": 0
+    },
+
+    "Ex2088": {
+        "author": "Kuo-Sheng Hsiao",
+        "title": " Download Remote Node Using Ethernet Bootstrap (1984) ",
+        "exhibit": 2088,
+        "alias": "Hsiao",
+        "offset": 0
+    },
+
+    "Ex2089": {
+        "author": "Gregor Bochmann",
+        "title": " Towards Videotext Standards, Viewdata and Videotext, 1980–81: A Worldwide Report (1980) ",
+        "exhibit": 2089,
+        "alias": "Bochmann",
+        "offset": 0
+    },
+
+    "Ex2090": {
+        "author": "Finlayson",
+        "title": " Bootstrap Loading using TFTP, Network Working Group Request for Comments: 906 (1984) ",
+        "exhibit": 2090,
+        "alias": "Finlayson",
+        "offset": 0
+    },
+
+    "Ex2091": {
+        "author": "",
+        "title": "U.S. Patent No. 4,337,483 ",
+        "exhibit": 2091,
+        "alias": "Guillou",
+        "offset": 0
+    },
+
+    "Ex2092": {
+        "author": "",
+        "title": "U.S. Patent No. 4,352,011 ",
+        "exhibit": 2092,
+        "alias": "Guillou ’011",
+        "offset": 0
+    },
+
+    "Ex2093": {
+        "author": "",
+        "title": "International Patent Application No. WO 80/01636 ",
+        "exhibit": 2093,
+        "alias": "Guillou PCT",
+        "offset": 0
+    },
+
+    "Ex2094": {
+        "author": "",
+        "title": "DES Modes of Operation (Federal Information Processing Standards Publication 81), U.S. Dept. of Commerce, Nat’l Bureau of Standards (Dec. 2, 1980)",
+        "exhibit": 2094,
+        "alias": "FIPS PUB 81",
+        "offset": 0
+    },
+    "Ex2095": {
+        "author": "",
+        "title": "Data Encryption Standard (Federal Information Processing Standards Publication 81), U.S. Dept. of Commerce, Nat’l Bureau of Standards (Jan. 15, 1977)",
+        "exhibit": 2095,
+        "alias": "FIPS PUB 46",
+        "offset": 0
+    },
+    "Ex2096": {
+        "author": "",
+        "title": "U.S. Patent No. 4,172,213 ",
+        "exhibit": 2096,
+        "alias": "Barnes",
+        "offset": 0
+    },
+
+    "Ex2097": {
+        "author": "",
+        "title": "U.S. Patent No. 4,182,933 ",
+        "exhibit": 2097,
+        "alias": "Rosenblum",
+        "offset": 0
+    },
+
+    "Ex2098": {
+        "author": "",
+        "title": "U.S. Patent No. 4,556,904 ",
+        "exhibit": 2098,
+        "alias": "Monat",
+        "offset": 0
+    },
+
+    "Ex2099": {
+        "author": "",
+        "title": "U.S. Patent No. 4,805,134 ",
+        "exhibit": 2099,
+        "alias": "Calo",
+        "offset": 0
+    },
+
+    "Ex2100": {
+        "author": "",
+        "title": "Broadcast Teletext Specification, published by British Broadcasting Corporation et al. (September 1976)",
+        "exhibit": 2100,
+        "alias": "",
+        "offset": 0
+    },
+    "Ex2101": {
+        "author": "",
+        "title": "Videotex/Teletext Presentation Level Protocol Syntax, North American PLPS (“NAPLPS” Standard) (December 1983)",
+        "exhibit": 2101,
+        "alias": "",
+        "offset": 0
+    },
+    "Ex2102": {
+        "author": "",
+        "title": "U.S. Patent No. 4,739,510 ",
+        "exhibit": 2102,
+        "alias": "Jeffers",
+        "offset": 0
+    },
+
+    "Ex2103": {
+        "author": "",
+        "title": "U.S. Patent No. 4,536,791 ",
+        "exhibit": 2103,
+        "alias": "Campbell",
+        "offset": 0
+    },
+
+    "Ex2104": {
+        "author": "",
+        "title": "U.S. Patent No. 2,843,655 ",
+        "exhibit": 2104,
+        "alias": "Gottfried",
+        "offset": 0
+    },
+
+    "Ex2105": {
+        "author": "",
+        "title": "U.S. Patent No. 3,211,830 ",
+        "exhibit": 2105,
+        "alias": "Sargent",
+        "offset": 0
+    },
+
+    "Ex2106": {
+        "author": "",
+        "title": "U.S. Patent No. 4,068,264 ",
+        "exhibit": 2106,
+        "alias": "Pires",
+        "offset": 0
+    },
+
+    "Ex2107": {
+        "author": "",
+        "title": "U.S. Patent No. 3,924,059 ",
+        "exhibit": 2107,
+        "alias": "Horowitz",
+        "offset": 0
+    },
+
+    "Ex2108": {
+        "author": "",
+        "title": "U.S. Patent No. 3,886,302 ",
+        "exhibit": 2108,
+        "alias": "Kosco",
+        "offset": 0
+    },
+
+    "Ex2109": {
+        "author": "Chris Powell",
+        "title": " Prestel: the opportunity for advertising, VIEWDATA AND VIDEOTEXT 1980-81: AWORLDWIDE REPORT ",
+        "exhibit": 2109,
+        "alias": "Powell",
+        "offset": 0
+    },
+
+    "Ex2110": {
+        "author": "Robert C. Moore",
+        "title": " Home Information Systems: A Primer (July 1981) ",
+        "exhibit": 2110,
+        "alias": "Moore",
+        "offset": 0
+    },
+    "Ex2111": {
+        "author": "Hartford Gunn et al.",
+        "title": "A Public Broadcaster's View of Teletext in The United States (1980)",
+        "exhibit": 2111,
+        "alias": "Gunn",
+        "offset": 0
+    },
+
+    "Ex2112": {
+        "author": "J.F. Courtney",
+        "title": " Videotel: An Extension of the Use of the Display Equipment of a Prestel TV set for the Travel Industry, VIDEOTEL, VIEWDATA AND VIDEOTEXT 1980-81: AWORLDWIDE REPORT ",
+        "exhibit": 2112,
+        "alias": "Courtney",
+        "offset": 0
+    },
+
+    "Ex2113": {
+        "author": "R. F. Park",
+        "title": " The Role of Viewdata in Electronic Funds Transfer, VIEWDATA AND VIDEOTEXT 1980-81: AWORLDWIDE REPORT ",
+        "exhibit": 2113,
+        "alias": "Park",
+        "offset": 0
+    },
+
+    "Ex2114": {
+        "author": "Waring",
+        "title": " Cox’s INDAX System – Delivering Future Two-Way Cable Services Today, Videotex ’81 ",
+        "exhibit": 2114,
+        "alias": "Waring",
+        "offset": 0
+    },
+
+    "Ex2115": {
+        "author": "",
+        "title": "The Viewtron Handbook (1983) ",
+        "exhibit": 2115,
+        "alias": "Viewtron Handbook",
+        "offset": 0
+    },
+
+    "Ex2116": {
+        "author": "",
+        "title": "Viewtron: A Service of the Future for American Homes ",
+        "exhibit": 2116,
+        "alias": "Viewtron Brochure",
+        "offset": 0
+    },
+
+    "Ex2117": {
+        "author": "",
+        "title": "Viewtron Magazine & Guide (1983) ",
+        "exhibit": 2117,
+        "alias": "Viewtron Magazine",
+        "offset": 0
+    },
+
+    "Ex2118": {
+        "author": "Varadharajan",
+        "title": " Some Cryptographic Techniques for Secure Data Communication, Plymouth Polytechnic, 1984 ",
+        "exhibit": 2118,
+        "alias": "Varadharajan",
+        "offset": 0
+    },
+
+    "Ex2119": {
+        "author": "",
+        "title": "Lewiston Daily Sun, March 27, 1984",
+        "exhibit": 2119,
+        "alias": "",
+        "offset": 0
+    },
+    "Ex2120": {
+        "author": "",
+        "title": "The Micro Cookbook User’s Guide and Reference Booklet (1984) ",
+        "exhibit": 2120,
+        "alias": "Cookbook Guide",
+        "offset": 0
+    },
+
+    "Ex2121": {
+        "author": "Brian G. Champness",
+        "title": " Social Uses of Videotex, VIDEOTEX ’81 INTERNATIONAL CONFERENCE & EXHIBITION (Online Conferences Ltd., May 20, 1981) ",
+        "exhibit": 2121,
+        "alias": "Champness",
+        "offset": 0
+    },
+
+    "Ex2122": {
+        "author": "Leslie T. Mapp",
+        "title": " Telesoftware for Beginners, JOURNAL OF EDUCATIONAL TELEVISION AND OTHER MEDIA, Vol. VII, Issue No. 1 (Spring 1981)",
+        "exhibit": 2122,
+        "alias": "",
+        "offset": 0
+    },
+
+    "Ex2123": {
+        "author": "David Shnaider",
+        "title": " Taking Videotex to Market: The CBS Role in the Joint CBS/AT&T Ridgewood Trail, VIDEOTEX ’83 INTERNATIONAL CONFERENCE & EXHIBITION (1983) ",
+        "exhibit": 2123,
+        "alias": "Shnaider",
+        "offset": 0
+    },
+
+    "Ex2124": {
+        "author": "Sollins",
+        "title": " The TFTP Protocol (Revision 2), Network Working Group Request for Comments: 783 (1981) ",
+        "exhibit": 2124,
+        "alias": "Sollins",
+        "offset": 0
+    },
+
+    "Ex2125": {
+        "author": "",
+        "title": "U.S. Patent No. 4,547,851 ",
+        "exhibit": 2125,
+        "alias": "Kurland",
+        "offset": 0
+    },
+
+    "Ex2126": {
+        "author": "David Godfrey & Ernest Chang eds.",
+        "title": "THE TELIDON BOOK  (1981) ",
+        "exhibit": 2126,
+        "alias": "The Telidon Book",
+        "offset": 0
+    },
+
+    "Ex2127": {
+        "author": "",
+        "title": "U.S. Patent No. 5,270,922 ",
+        "exhibit": 2127,
+        "alias": "Higgins",
+        "offset": 0
+    },
+
+    "Ex2128": {
+        "author": "",
+        "title": "U.S. Patent No. 4,439,784 ",
+        "exhibit": 2128,
+        "alias": "Furukawa",
+        "offset": 0
+    },
+
+    "Ex2129": {
+        "author": "Robert M. Metcalfe & David R. Boggs",
+        "title": " Ethernet: Distributed Packet Switching for Local Computer Networks, 19 COMM. OF THE ACM 395 (1976) ",
+        "exhibit": 2129,
+        "alias": "Metcalfe",
+        "offset": 0
+    }
+
+}

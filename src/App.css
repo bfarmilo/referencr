@@ -1,0 +1,100 @@
+.App {
+    text-align: center;
+    background: #222;
+}
+
+.App-logo {
+    animation: App-logo-spin infinite 20s linear;
+    height: 80px;
+}
+
+.Display-area {
+    display: flex;
+    margin: 0px 0px -10px 0px;
+    max-width: 1400px;
+    background: #FFF;
+}
+
+.Edit-top {
+    position: fixed;
+    background: #222;
+    width: 300px;
+    height: 80px;
+}
+
+.Editor {
+    display: flex;
+    position: fixed;
+    background: #222;
+    color: white;
+    width: 300px;
+    padding: 70px 0px 0px 0px;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.Editor ul li {
+    margin: 0px;
+    padding: 2px;
+    text-align: left;
+    list-style: none;
+}
+
+li.tooltip::after {
+    content: attr(data-tip);
+    display: none;
+    color: #CCC;
+}
+
+li.tooltip:hover::after {
+    display: inline;
+}
+
+.Pdf-area {
+    display: flex;
+    flex-direction: column;
+    margin: 0px 0px 0px 300px;
+    width: 1200px;
+}
+
+.Pdf-controls {
+    background: #222;
+    position: fixed;
+    flex-direction: row;
+    width: 1200px;
+    height: 70px;
+    margin: 0px 0px 0px 0px;
+    padding: 0px -10px 0px 0px;
+}
+
+.Pdf-control-buttons {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    list-style: none;
+    padding: 4px 0px 0px 0px;
+}
+
+.Pdf-control-buttons li {
+    flex: 0 1 auto;
+    height: 30px;
+    background-color: #222;
+    color: #FFF;
+    margin: -10px;
+    padding: 15px 30px 5px 30px;
+    text-align: center;
+}
+
+.pdf-context {
+    text-align: center;
+    margin: 0px 0px 0px 0px;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
