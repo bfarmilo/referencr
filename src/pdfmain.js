@@ -11,6 +11,8 @@ let lastdrawn = 0; //Viewer.state.lastdrawn
 let viewheight = []; //pdf.state.height
 //let lineArray = []; //page.state.linepositions
 
+//-----------------------------------------------------------------------------
+
 class PDF extends React.Component {
   constructor(props) {
     super(props)
@@ -18,6 +20,7 @@ class PDF extends React.Component {
       pdf: null,
       scale: 1.5,
     }
+    this.sendNewHeight = this.sendNewHeight.bind(this);
   }
   getChildContext() {
     return {
@@ -34,17 +37,24 @@ class PDF extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.src !== this.props.src) {
-      console.log(`PDF: will receive new src`);
+      console.log(`PDF: will receive new src, resetting heights`);
+      viewheight = [];
+      this.setState ({pdf: null}); // do this to make sure the promise has time to resolve before re-rendering
       PDFJS.getDocument(nextProps.src).then((pdf) => {
         this.setState({ pdf });
       });
     }
   }
 
+  sendNewHeight(heights) {
+    this.props.newViewerHeight(heights);
+  }
+
   render() {
+    
     return (
       <div className='pdf-context'>
-        {this.props.children}
+        <Viewer hideimages={true} exhibit={this.props.exhibit} pages={this.props.pages} offset={this.props.offset} newViewerHeight={this.sendNewHeight} />
       </div>
     )
   }
@@ -58,6 +68,20 @@ PDF.childContextTypes = {
   pdf: React.PropTypes.object,
   scale: React.PropTypes.number,
 }
+
+//--------------------------------------------------------------------------
+
+class PlaceHolder extends React.Component {
+
+  render () {
+    let height = 84; //logo div height is 84px
+    viewheight.push(height);  //add current page height to viewheight array
+    console.log(`Placeholder: added logo height ${height}`);
+    return (<div><img src={logo} className="App-logo" alt="logo" /></div>)
+  }
+}
+
+//--------------------------------------------------------------------------
 
 class Page extends React.Component {
   constructor(props) {
@@ -201,6 +225,8 @@ Page.propTypes = {
 }
 Page.contextTypes = PDF.childContextTypes
 
+//-----------------------------------------------------------------------------
+
 class Viewer extends React.Component {
   constructor(props) {
     super(props)
@@ -256,15 +282,7 @@ class Viewer extends React.Component {
 }
 Viewer.contextTypes = PDF.childContextTypes
 
-class PlaceHolder extends React.Component {
-
-  render () {
-    let height = 84; //logo div height is 84px
-    viewheight.push(height);  //add current page height to viewheight array
-    console.log(`Placeholder: added logo height ${height}`);
-    return (<div><img src={logo} className="App-logo" alt="logo" /></div>)
-  }
-}
+//-----------------------------------------------------------------------------
 
 class MyPdfViewer extends React.Component {
 
@@ -279,9 +297,7 @@ class MyPdfViewer extends React.Component {
 
   render() {
     return (
-      <PDF exhibit={this.props.exhibit.exhibit} src={this.props.exhibit.path}>
-        <Viewer hideimages={true} pages={this.props.pages} offset={this.props.exhibit.offset} exhibit={this.props.exhibit.exhibit} newViewerHeight={this.getNewHeight} />
-      </PDF>
+      <PDF exhibit={this.props.exhibit.exhibit} src={this.props.exhibit.path} pages={this.props.pages} offset={this.props.exhibit.offset} newViewerHeight={this.getNewHeight} />
     )
   }
 }
