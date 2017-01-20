@@ -1,8 +1,7 @@
 import  React  from  'react';
 import  PDFJS  from  'pdfjs-dist/build/pdf.js';
-//import { getPageTextContent } from 'pdfjs-dist/web/pdf_viewer.js'; 
-import exhibits from '../public/exhibitlist.json';
-//import logo from './logo.svg';
+import { textLayerBuilder } from 'pdfjs-dist/web/pdf_viewer.js'; 
+import logo from './logo.svg';
 //import {svgparse, clickedLine} from './svgparse.js';
 import clickedLine from './svgparse.js'
 
@@ -110,7 +109,6 @@ class Page extends React.Component {
     this.setState({ status: 'rendering' })
   }
 
-  // used to test if 1-bit is an svg problem
   _renderPage(page) {
     let { scale } = this.context;
     let viewport = page.getViewport(scale);
@@ -121,7 +119,9 @@ class Page extends React.Component {
     canvas.height = height;
 
     viewheight.push(height);  //add current page height to viewheight array
+    console.log(`Page: added page height ${height}, calling for update`);
     this.props.getPageHeight(viewheight);
+
 
     //let canvasOffset = canvas.offset();
     //let textLayerDiv = this.refs.textlayer;
@@ -132,7 +132,7 @@ class Page extends React.Component {
     });
 
     /*
-    PDFJS_View.getTextContent(page).then(function(textContent){
+    PDFJS.getTextContent(page).then(function(textContent){
       let textLayer = new TextLayerBuilder({
           textLayerDiv : textLayerDiv.get(0),
           pageIndex : page_num - 1,
@@ -147,6 +147,7 @@ class Page extends React.Component {
   }
 
   /*
+  // can't use since 1-bit inversion bug in SVG renderer
   _renderPageSvg (page) {
     let { scale } = this.context
     let viewport = page.getViewport(scale)
@@ -224,10 +225,11 @@ class Viewer extends React.Component {
   }
 
   updateNewHeight(heightArray) {
+    console.log(`Viewer: heightarray = `, heightArray);
     if (heightArray.length > 1) {
       heightArray = heightArray.slice(0, heightArray.length - 1);
     }
-    this.props.newViewerHeight(heightArray.reduce((a, b) => a + b));
+    this.props.newViewerHeight(heightArray);
   }
 
   render() {
@@ -237,7 +239,7 @@ class Viewer extends React.Component {
     let pages = Array.apply(null, { length: (numPages >= this.props.pages + this.props.offset) ? (this.props.pages + this.props.offset) : numPages })
       .map((v, i) => {
         if (i<this.props.offset) {
-          return (<div id={`page ${i} not loaded`} key={`skipped-${i}`}></div>)
+          return (<PlaceHolder id={`page ${i} not loaded`} key={`skipped-${i}`} />)
         }
         return (<Page id={`page${i + 1}`} index={i + 1} key={`${fingerprint}-${i}`} hideimages={this.props.hideimages} getPageHeight={this.updateNewHeight} />)
       });
@@ -254,6 +256,16 @@ class Viewer extends React.Component {
 }
 Viewer.contextTypes = PDF.childContextTypes
 
+class PlaceHolder extends React.Component {
+
+  render () {
+    let height = 84; //logo div height is 84px
+    viewheight.push(height);  //add current page height to viewheight array
+    console.log(`Placeholder: added logo height ${height}`);
+    return (<div><img src={logo} className="App-logo" alt="logo" /></div>)
+  }
+}
+
 class MyPdfViewer extends React.Component {
 
   constructor(props) {
@@ -267,11 +279,13 @@ class MyPdfViewer extends React.Component {
 
   render() {
     return (
-      <PDF exhibit={this.props.exhibit} src={exhibits[this.props.exhibit].path} setInitialHeight={this.getNewHeight}>
-        <Viewer hideimages={true} pages={this.props.pages} offset={exhibits[this.props.exhibit].offset} exhibit={this.props.exhibit} newViewerHeight={this.getNewHeight} />P
-          </PDF>
+      <PDF exhibit={this.props.exhibit.exhibit} src={this.props.exhibit.path}>
+        <Viewer hideimages={true} pages={this.props.pages} offset={this.props.exhibit.offset} exhibit={this.props.exhibit.exhibit} newViewerHeight={this.getNewHeight} />
+      </PDF>
     )
   }
 }
+
+// refactor to have Viewer as proper component under PDF
 
 module.exports = MyPdfViewer;

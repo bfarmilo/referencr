@@ -12,6 +12,8 @@ const url = require('url');
 let mainWindow;
 
 function createWindow() {
+    BrowserWindow.addDevToolsExtension(process.env.LOCALAPPDATA + '/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/0.15.4_0');
+
     // Create the browser window.
     mainWindow = new BrowserWindow({ width: 1440, height: 766 });
 
@@ -27,7 +29,6 @@ function createWindow() {
 
 
     // Add the react tools and Open the DevTools.
-    BrowserWindow.addDevToolsExtension(process.env.LOCALAPPDATA + '/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/0.15.4_0');
     mainWindow.webContents.openDevTools();
 
     // Emitted when the window is closed.
