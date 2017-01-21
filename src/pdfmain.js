@@ -129,8 +129,29 @@ class Page extends React.Component {
   }
   _loadPage(pdf) {
     if (this.state.status === 'rendering' || this.state.page != null) return;
-    pdf.getPage(this.props.index).then(this._renderPage.bind(this));
-    this.setState({ status: 'rendering' })
+    console.log(`loading page ${this.props.index} with offset ${this.props.startPage}`)
+    if (this.props.index > this.props.startPage) {
+      pdf.getPage(this.props.index).then(this._renderPage.bind(this));
+      this.setState({ status: 'rendering' })
+    } else {
+      this._skipPage(this.props.index);
+    }
+  }
+
+  _skipPage(pageToSkip) {
+    console.log(`page skipped ${pageToSkip}`);
+    let canvas = this.refs.canvas;
+    let context = canvas.getContext('2d');
+    let width = 200;
+    let height = 500;
+    canvas.width = width;
+    canvas.height = height;
+
+    context.rect(5,5,width-10,height-10);
+    context.stroke();
+
+    //this.setState({ status: 'rendered', page: null, width, height })
+
   }
 
   _renderPage(page) {
@@ -142,11 +163,6 @@ class Page extends React.Component {
     canvas.width = width;
     canvas.height = height;
 
-    viewheight.push(height);  //add current page height to viewheight array
-    console.log(`Page: added page height ${height}, calling for update`);
-    this.props.getPageHeight(viewheight);
-
-
     //let canvasOffset = canvas.offset();
     //let textLayerDiv = this.refs.textlayer;
 
@@ -154,7 +170,11 @@ class Page extends React.Component {
       canvasContext: context,
       viewport
     });
-
+    
+    viewheight.push(height);  //add current page height to viewheight array
+    console.log(`Page: added page height ${height}, calling for update`);
+    this.props.getPageHeight(viewheight);
+    
     /*
     PDFJS.getTextContent(page).then(function(textContent){
       let textLayer = new TextLayerBuilder({
@@ -204,12 +224,8 @@ class Page extends React.Component {
 */
   render() {
     let { width, height, status } = this.state
-    if (this.state.status !== 'rendered') {
-
-    }
-    //let mountpoint = <div ref='container' onMouseDown={(e) => this._handleClick(e)} onMouseUp={(e) => this._handleClick(e)}/>
     let mountpoint = <canvas ref="canvas" onMouseDown={(e) => this._handleClick(e)} onMouseUp={(e) => this._handleClick(e)} />
-    //let textmountpoint = <div ref="textlayer" height={viewport.height} width={viewport.width} top={canvasOffset.top} left={canvasOffset.left}> </div>
+    //let textmountpoint = <div ref="textlayer" height={height} width={width} top={canvasOffset.top} left={canvasOffset.left}> </div>
 
     return (
       <div className={`pdf-page ${status}`} style={{ width, height }}>
@@ -264,10 +280,7 @@ class Viewer extends React.Component {
     let fingerprint = pdf ? pdf.pdfInfo.fingerprint : 'none'
     let pages = Array.apply(null, { length: (numPages >= this.props.pages + this.props.offset) ? (this.props.pages + this.props.offset) : numPages })
       .map((v, i) => {
-        if (i<this.props.offset) {
-          return (<PlaceHolder id={`page ${i} not loaded`} key={`skipped-${i}`} />)
-        }
-        return (<Page id={`page${i + 1}`} index={i + 1} key={`${fingerprint}-${i}`} hideimages={this.props.hideimages} getPageHeight={this.updateNewHeight} />)
+        return (<Page id={`page${i + 1}`} index={i + 1} key={`${fingerprint}-${i}`} hideimages={this.props.hideimages} getPageHeight={this.updateNewHeight} startPage={this.props.offset}/>)
       });
     if (lastdrawn !== this.state.lastload) {
       lastdrawn = this.state.lastload;

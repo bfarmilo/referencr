@@ -57,7 +57,7 @@ class App extends Component {
 
   checkScroll(event) {
     scrollPos = document.body.scrollTop;
-    //console.info(`scrolling ${scrollPos} / ${totalHeight}`)
+    console.info(`scrolling ${scrollPos} / ${totalHeight}`)
     if (status !== 'loading' && (scrollPos > totalHeight)) {
       status = 'loading';
       console.info(`page jump requested:`, scrollPos, totalHeight)
