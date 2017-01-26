@@ -1,8 +1,5 @@
 const electron = require('electron');
-// Module to control application life.
-const app = electron.app;
-// Module to create native browser window.
-const BrowserWindow = electron.BrowserWindow;
+const { app, ipcMain, BrowserWindow } = electron;
 
 const path = require('path');
 const url = require('url');
@@ -34,30 +31,11 @@ function createWindow() {
         slashes: true
     });
 
-    console.log(`loading file at ${startUrl}`);
+    //console.log(`loading file at ${startUrl}`);
     // and load the index.html of the app.
     mainWindow.loadURL(startUrl);
-
     // Add the react tools and Open the DevTools.
     mainWindow.webContents.openDevTools();
-
-    // main process
-    fse.readJSON(`${process.env.LOCALAPPDATA}//Dropbox//info.json`, 'utf8', (err2, dropbox) => {
-        if (err2) {
-            console.log(dialog.showErrorBox('Dropbox Error', `Error getting Dropbox path: ${err2}`));
-            return;
-        }
-        console.log(`Main: Good DropBox Path:${dropbox.business.path}\\`);
-        // launch the renderer process
-        // now read the exhibit list into a local object
-        fse.readJSON(`${dropbox.business.path}\\${exhibitDir}${exhibitFile}`, (error, resultObj) => {
-            if (error) console.log(error);
-            exhibitList = resultObj;
-            mainWindow.webContents.
-            mainWindow.webContents.send('new_folder', exhibitList);
-            console.log(`Main: exhibitList set`);
-        });
-    });
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function () {
@@ -93,3 +71,22 @@ app.on('activate', function () {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
+ipcMain.on('window_ready', () => {
+    // main process
+    console.log(`Main: received window ready message from renderer window`);
+    fse.readJSON(`${process.env.LOCALAPPDATA}//Dropbox//info.json`, 'utf8', (err2, dropbox) => {
+        if (err2) {
+            console.log(dialog.showErrorBox('Dropbox Error', `Error getting Dropbox path: ${err2}`));
+            return;
+        }
+        console.log(`Main: Good DropBox Path:${dropbox.business.path}\\`);
+        // launch the renderer process
+        // now read the exhibit list into a local object
+        fse.readJSON(`${dropbox.business.path}\\${exhibitDir}${exhibitFile}`, (error, resultObj) => {
+            if (error) console.log(error);
+            exhibitList = resultObj;
+            mainWindow.webContents.send('new_folder', exhibitList);
+            console.log(`Main: exhibitList sent to render window`);
+        });
+    });
+});

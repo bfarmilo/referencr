@@ -2,19 +2,17 @@ import React, { Component } from 'react';
 
 import MyPdfViewer from './pdfmain';
 import MyEditor from './editormain';
-//import exhibits from '../example/exhibitlist.json';
-import exhibits from 'C:/Users/Bill/Documents/Dropbox (PMC)/PMC Public/Licensing/Clients/Samsung/IPR/IPR2017-00288/exhibitlist.json';
 import './App.css';
 import '../node_modules/pdfjs-dist/web/pdf_viewer.css';
-//import { ipcRenderer } from 'electron';
-//import { ipcRenderer } from '../node_modules/electron';
+
+const electron = window.require('electron');
+const ipcRenderer = electron.ipcRenderer;
 
 const pageJump = 5;
 let topHeight = 0;
 let scrollPos = 0;
 let totalHeight = 5000;
 let status = "ready";
-//let exhibits = {};
 
 class Controls extends React.Component {
   //includes controls for clipping text
@@ -50,23 +48,18 @@ class App extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', (e) => this.checkScroll(e));
-    /*fs.readFile('C:/Users/Bill/Documents/Dropbox (PMC)/PMC Public/Licensing/Clients/Samsung/IPR/IPR2017-00288/exhibitlist.json', data => {
-      console.log(JSON.parse(data));
-      this.setState({exhibits: JSON.parse(data)});
-    });
-    */
-    /*
-    ipcRenderer.on('new_folder', exlist => {
-      console.log(`Index: received data from Main process with exhibitlist`, exlist);
+    window.addEventListener('scroll', (e) => this.checkScroll(e));  
+    ipcRenderer.on('new_folder', (event, exlist) => {
+      //console.log(`App: received data from Main process with exhibits`, exlist);
       this.handleNewDir(exlist);
     });
-    */
+    //console.log(`App: sending ready message to main process`);
+    ipcRenderer.send('window_ready');
   }
 
   handleNewDir(exhibits) {
+      //console.info(`App: received request for updating exhibits state`, exhibits);
       this.setState({exhibits});
-      exhibits = this.state.exhibits;
   }
 
   handleNewFile(exhibitKey) {
@@ -91,7 +84,7 @@ class App extends Component {
   updateWindowHeight(newHeight) {
     if (status === 'newFile') {
       totalHeight = 5000;
-      let jumpToPage = exhibits[this.state.activeExhibit].offset;
+      let jumpToPage = this.state.exhibits[this.state.activeExhibit].offset;
       console.info(`App: Jumping to page ${jumpToPage+1}`);
       topHeight = jumpToPage > 0 ? newHeight.slice(0,jumpToPage).reduce((a,b) => a+b): 0;
       console.info(`App: height recieved for new file, scroll target ${topHeight}`);
@@ -112,10 +105,10 @@ class App extends Component {
     let editTop = <div className="Edit-top">waiting for file</div>
     let editor = <div className="Editor"> </div>
     let viewer = <div className="pdf-viewer"> </div>
-    if (exhibits.hasOwnProperty("meta")) {
-      editTop = <div className="Edit-top">IPR {exhibits.meta.matter.IPR} (patent {exhibits.meta.matter.Patent}) {exhibits.meta.matter.Party} exhibits </div>;
-      editor = <MyEditor onUserInput={this.handleNewFile} exhibitfile={exhibits} />;
-      viewer = <MyPdfViewer pages={this.state.pages} onNewHeight={this.updateWindowHeight} rootpath={exhibits.meta.path} exhibit={exhibits[this.state.activeExhibit]} />;
+    if (this.state.exhibits.hasOwnProperty("meta")) {
+      editTop = <div className="Edit-top">{this.state.exhibits.meta.matter.IPR} (patent {Number(this.state.exhibits.meta.matter.Patent).toLocaleString()})</div>;
+      editor = <MyEditor onUserInput={this.handleNewFile} exhibitfile={this.state.exhibits} />;
+      viewer = <MyPdfViewer pages={this.state.pages} onNewHeight={this.updateWindowHeight} rootpath={this.state.exhibits.meta.path} exhibit={this.state.exhibits[this.state.activeExhibit]} />;
     }
     return (
       <div className="App">
