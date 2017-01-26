@@ -35,10 +35,10 @@
 const fse = require('fs-extra'); //for running in 'node-mode'
 let dropboxPath = ''; // keeps the path to the local dropbox
 let exhibitList = {};
-let exhibitDir = 'PMC Public/Licensing/Clients/Samsung/IPR/IPR2017-00288\\'; // think this will resolve to public
+let exhibitDir = `${process.argv[2]}\\`; // pass the target as a command-line argument
 const exhibitFile = 'exhibitlist.json'
 
-module.exports = getexhibit;
+//module.exports = getexhibit;
 
 function getexhibit(exhibitList, exhibitDir, overWrite) {
         fse.readFile(`${process.env.LOCALAPPDATA}//Dropbox//info.json`, 'utf8', (err2, pathdata) => {
@@ -60,7 +60,7 @@ function getexhibit(exhibitList, exhibitDir, overWrite) {
                                 // then drop the file from the array
                                 for (let ex in exhibitList) {
                                         if (exhibitList.hasOwnProperty(ex)) {
-                                                 if (ex !== 'meta' && overWrite) {
+                                                if (ex !== 'meta' && overWrite) {
                                                         let exNumber = exhibitList[ex].exhibit;
                                                         console.log(`ex: ${ex}, number: ${exhibitList[ex].exhibit} or ${exNumber}`);
                                                         let matchName = files.filter((v, i) => {
@@ -69,9 +69,9 @@ function getexhibit(exhibitList, exhibitDir, overWrite) {
                                                         console.log(`match element: `, matchName);
                                                         // how to deal with multi-part exhibits - leave it as an array
                                                         if (matchName.length === 1) {
-                                                                exhibitList[ex].path = `${matchName.toString()}`;
+                                                                exhibitList[ex].file = `${matchName.toString()}`;
                                                         } else {
-                                                                exhibitList[ex].path = matchName;
+                                                                exhibitList[ex].file = matchName;
                                                         }
 
                                                 }
@@ -87,4 +87,4 @@ function getexhibit(exhibitList, exhibitDir, overWrite) {
 
 }
 
-getexhibit(exhibitList, exhibitDir, false); // for node-mode, need to call the function
+getexhibit(exhibitList, exhibitDir, true); // for node-mode, need to call the function
