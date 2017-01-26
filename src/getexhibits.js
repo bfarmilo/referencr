@@ -6,7 +6,7 @@
             "Patent": 7747217,
             "Party": "Samsung"
         },
-        "path": "PMC Public\\Licensing\\Clients\\Samsung\\IPR\\IPR2017-00288",
+        "path": "PMC Public\\Licensing\\Clients\\Samsung\\IPR\\IPR2017-00288\",
         "regexMatch": "SAM-(\\d{4})((.*?)(?=\\(\\u201c)\\(\\u201c(.*)\\u201d\\)|(.*)\\n)",
         "regexReplace": "\"Ex$1\": {\\n  \"title\":\"$3$5\",\\n  \"exhibit\":\"$1\",\\n  \"alias\":\"$4\"\\n  }\\n"
     },
@@ -31,8 +31,8 @@
 // if author and alias can't be figured, everything goes in title
 // offset is the number of pages to skip before rendering (ie for patents, usually skip images)
 
-//import fse from 'fs-extra';
-const fse = require('fs-extra');
+//import fse from 'fs-extra'; // for running in babel-mode
+const fse = require('fs-extra'); //for running in 'node-mode'
 let dropboxPath = ''; // keeps the path to the local dropbox
 let exhibitList = {};
 let exhibitDir = 'PMC Public/Licensing/Clients/Samsung/IPR/IPR2017-00288\\'; // think this will resolve to public
@@ -40,7 +40,7 @@ const exhibitFile = 'exhibitlist.json'
 
 module.exports = getexhibit;
 
-function getexhibit(exhibitList, exhibitDir) {
+function getexhibit(exhibitList, exhibitDir, overWrite) {
         fse.readFile(`${process.env.LOCALAPPDATA}//Dropbox//info.json`, 'utf8', (err2, pathdata) => {
                 if (err2) {
                         console.log(dialog.showErrorBox('Dropbox Error', `Error getting Dropbox path: ${err2}`));
@@ -60,8 +60,7 @@ function getexhibit(exhibitList, exhibitDir) {
                                 // then drop the file from the array
                                 for (let ex in exhibitList) {
                                         if (exhibitList.hasOwnProperty(ex)) {
-                                                console.log(!exhibitList[ex].hasOwnProperty('path'));
-                                                if (ex !== 'meta' && !exhibitList[ex].hasOwnProperty('path')) {
+                                                 if (ex !== 'meta' && overWrite) {
                                                         let exNumber = exhibitList[ex].exhibit;
                                                         console.log(`ex: ${ex}, number: ${exhibitList[ex].exhibit} or ${exNumber}`);
                                                         let matchName = files.filter((v, i) => {
@@ -88,4 +87,4 @@ function getexhibit(exhibitList, exhibitDir) {
 
 }
 
-getexhibit(exhibitList, exhibitDir);
+getexhibit(exhibitList, exhibitDir, false); // for node-mode, need to call the function
