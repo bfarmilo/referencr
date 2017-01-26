@@ -6,7 +6,11 @@ const BrowserWindow = electron.BrowserWindow;
 
 const path = require('path');
 const url = require('url');
+const fse = require('fs-extra');
 
+const exhibitDir = "PMC Public\\Licensing\\Clients\\Samsung\\IPR\\IPR2017-00288\\"
+const exhibitFile = "exhibitlist.json";
+let exhibitList = {};
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
@@ -15,7 +19,14 @@ function createWindow() {
     BrowserWindow.addDevToolsExtension(process.env.LOCALAPPDATA + '/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/0.15.4_0');
 
     // Create the browser window.
-    mainWindow = new BrowserWindow({ width: 1440, height: 766 });
+    mainWindow = new BrowserWindow(
+        { 
+            width: 1440, 
+            height: 766,
+            "web-preferences": {
+                "web-security": false
+            }
+         });
 
     const startUrl = process.env.ELECTRON_START_URL || url.format({
         pathname: path.join(__dirname, '/../build/index.html'),
@@ -23,13 +34,30 @@ function createWindow() {
         slashes: true
     });
 
-    console.log(startUrl);
+    console.log(`loading file at ${startUrl}`);
     // and load the index.html of the app.
     mainWindow.loadURL(startUrl);
 
-
     // Add the react tools and Open the DevTools.
     mainWindow.webContents.openDevTools();
+
+    // main process
+    fse.readJSON(`${process.env.LOCALAPPDATA}//Dropbox//info.json`, 'utf8', (err2, dropbox) => {
+        if (err2) {
+            console.log(dialog.showErrorBox('Dropbox Error', `Error getting Dropbox path: ${err2}`));
+            return;
+        }
+        console.log(`Main: Good DropBox Path:${dropbox.business.path}\\`);
+        // launch the renderer process
+        // now read the exhibit list into a local object
+        fse.readJSON(`${dropbox.business.path}\\${exhibitDir}${exhibitFile}`, (error, resultObj) => {
+            if (error) console.log(error);
+            exhibitList = resultObj;
+            mainWindow.webContents.
+            mainWindow.webContents.send('new_folder', exhibitList);
+            console.log(`Main: exhibitList set`);
+        });
+    });
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function () {
@@ -64,3 +92,4 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+

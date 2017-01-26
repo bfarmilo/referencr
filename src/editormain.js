@@ -28,12 +28,16 @@ class MyEditor extends React.Component {
   render() {
       exhibits = this.props.exhibitfile;
       let exhibitList = [];
+      let parentDoc;
       for (let elem in exhibits) {
         //get rid of ESLint warning by making sure elem property is present
         if (exhibits.hasOwnProperty(elem)) {
           if (elem !== 'meta') {
             //console.log(`MyEditor: now logging ${elem}: ${exhibits[elem].alias ? exhibits[elem].alias : exhibits[elem].title}`);
             exhibitList.push(<li id={elem} key={exhibits[elem].exhibit} className="tooltip" onClick={(e) => this.exhibitClick(e)} data-tip={exhibits[elem].alias ? exhibits[elem].alias : exhibits[elem].title}>{elem} </li>);
+          } else {
+            //the meta element
+            parentDoc = <li id={elem} key={exhibits[elem].matter.Patent} className="tooltip" onClick={(e) => this.exhibitClick(e)} data-tip={`${exhibits[elem].matter.Party} ${exhibits[elem].doctype} ${exhibits[elem].matter.Patent}`}>{exhibits[elem].doctype} </li>
           }
         }
       }
@@ -41,7 +45,10 @@ class MyEditor extends React.Component {
       return (
         <div className="Editor">
           <ul>
-            {exhibitList}
+            {parentDoc}
+            <ul>
+              {exhibitList}
+            </ul>
           </ul>
         </div>
       )

@@ -2,14 +2,19 @@ import React, { Component } from 'react';
 
 import MyPdfViewer from './pdfmain';
 import MyEditor from './editormain';
-import exhibits from '../public/exhibitlist.json';
+//import exhibits from '../example/exhibitlist.json';
+import exhibits from 'C:/Users/Bill/Documents/Dropbox (PMC)/PMC Public/Licensing/Clients/Samsung/IPR/IPR2017-00288/exhibitlist.json';
 import './App.css';
+import '../node_modules/pdfjs-dist/web/pdf_viewer.css';
+//import { ipcRenderer } from 'electron';
+//import { ipcRenderer } from '../node_modules/electron';
 
 const pageJump = 5;
 let topHeight = 0;
 let scrollPos = 0;
 let totalHeight = 5000;
 let status = "ready";
+//let exhibits = {};
 
 class Controls extends React.Component {
   //includes controls for clipping text
@@ -34,16 +39,34 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeExhibit: "Ex9999",
-      pages: 2
+      activeExhibit: "meta",
+      pages: 2,
+      exhibits: {}
     }
     this.handleNewFile = this.handleNewFile.bind(this);
     this.checkScroll = this.checkScroll.bind(this);
     this.updateWindowHeight = this.updateWindowHeight.bind(this);
+    this.handleNewDir = this.handleNewDir.bind(this);
   }
 
   componentDidMount() {
     window.addEventListener('scroll', (e) => this.checkScroll(e));
+    /*fs.readFile('C:/Users/Bill/Documents/Dropbox (PMC)/PMC Public/Licensing/Clients/Samsung/IPR/IPR2017-00288/exhibitlist.json', data => {
+      console.log(JSON.parse(data));
+      this.setState({exhibits: JSON.parse(data)});
+    });
+    */
+    /*
+    ipcRenderer.on('new_folder', exlist => {
+      console.log(`Index: received data from Main process with exhibitlist`, exlist);
+      this.handleNewDir(exlist);
+    });
+    */
+  }
+
+  handleNewDir(exhibits) {
+      this.setState({exhibits});
+      exhibits = this.state.exhibits;
   }
 
   handleNewFile(exhibitKey) {
@@ -86,16 +109,24 @@ class App extends Component {
   }
 
   render() {
+    let editTop = <div className="Edit-top">waiting for file</div>
+    let editor = <div className="Editor"> </div>
+    let viewer = <div className="pdf-viewer"> </div>
+    if (exhibits.hasOwnProperty("meta")) {
+      editTop = <div className="Edit-top">IPR {exhibits.meta.matter.IPR} (patent {exhibits.meta.matter.Patent}) {exhibits.meta.matter.Party} exhibits </div>;
+      editor = <MyEditor onUserInput={this.handleNewFile} exhibitfile={exhibits} />;
+      viewer = <MyPdfViewer pages={this.state.pages} onNewHeight={this.updateWindowHeight} rootpath={exhibits.meta.path} exhibit={exhibits[this.state.activeExhibit]} />;
+    }
     return (
       <div className="App">
         <div className="Display-area">
           <div className="Edit-area">
-            <div className="Edit-top"> </div>
-            <MyEditor onUserInput={this.handleNewFile} />
+            {editTop}
+            {editor}
           </div>
           <div className="Pdf-area" id="Viewer-area">
             <Controls />
-            <MyPdfViewer pages={this.state.pages} onNewHeight={this.updateWindowHeight} exhibit={exhibits[this.state.activeExhibit]} />
+            {viewer}
           </div>
         </div>
       </div>
