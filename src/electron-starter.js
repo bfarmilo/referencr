@@ -5,7 +5,7 @@ const path = require('path');
 const url = require('url');
 const fse = require('fs-extra');
 
-const exhibitDir = "PMC Public\\Licensing\\Clients\\Samsung\\IPR\\IPR2017-00288\\"
+const exhibitDir = `${process.argv[2]}\\`;
 const exhibitFile = "exhibitlist.json";
 let exhibitList = {};
 // Keep a global reference of the window object, if you don't, the window will
@@ -14,7 +14,6 @@ let mainWindow;
 
 function createWindow() {
     BrowserWindow.addDevToolsExtension(process.env.LOCALAPPDATA + '/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/0.15.4_0');
-
     // Create the browser window.
     mainWindow = new BrowserWindow(
         { 
@@ -80,6 +79,7 @@ ipcMain.on('window_ready', () => {
             return;
         }
         console.log(`Main: Good DropBox Path:${dropbox.business.path}\\`);
+        mainWindow.webContents.send('dropbox', `${dropbox.business.path}\\`);
         // launch the renderer process
         // now read the exhibit list into a local object
         fse.readJSON(`${dropbox.business.path}\\${exhibitDir}${exhibitFile}`, (error, resultObj) => {

@@ -13,6 +13,7 @@ let topHeight = 0;
 let scrollPos = 0;
 let totalHeight = 5000;
 let status = "ready";
+let dropboxpath='';
 
 class Controls extends React.Component {
   //includes controls for clipping text
@@ -53,6 +54,10 @@ class App extends Component {
       //console.log(`App: received data from Main process with exhibits`, exlist);
       this.handleNewDir(exlist);
     });
+    ipcRenderer.on('dropbox', (event, dbpath) => {
+      console.info(`App: got dropbox path ${dbpath}`)
+      dropboxpath = dbpath;
+    })
     //console.log(`App: sending ready message to main process`);
     ipcRenderer.send('window_ready');
   }
@@ -108,7 +113,7 @@ class App extends Component {
     if (this.state.exhibits.hasOwnProperty("meta")) {
       editTop = <div className="Edit-top">{this.state.exhibits.meta.matter.IPR} (patent {Number(this.state.exhibits.meta.matter.Patent).toLocaleString()})</div>;
       editor = <MyEditor onUserInput={this.handleNewFile} exhibitfile={this.state.exhibits} />;
-      viewer = <MyPdfViewer pages={this.state.pages} onNewHeight={this.updateWindowHeight} rootpath={this.state.exhibits.meta.path} exhibit={this.state.exhibits[this.state.activeExhibit]} />;
+      viewer = <MyPdfViewer pages={this.state.pages} onNewHeight={this.updateWindowHeight} rootpath={`${dropboxpath}${this.state.exhibits.meta.path}`} exhibit={this.state.exhibits[this.state.activeExhibit]} />;
     }
     return (
       <div className="App">
