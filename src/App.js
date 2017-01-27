@@ -63,8 +63,8 @@ class App extends Component {
   }
 
   handleNewDir(exhibits) {
-      //console.info(`App: received request for updating exhibits state`, exhibits);
       this.setState({exhibits});
+      console.info(`App: received request for updating exhibits path ${dropboxpath}${this.state.exhibits.meta.path} state`, exhibits);
   }
 
   handleNewFile(exhibitKey) {

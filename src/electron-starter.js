@@ -11,6 +11,8 @@ let exhibitList = {};
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
+let devMode = false;
+
 
 function createWindow() {
     BrowserWindow.addDevToolsExtension(process.env.LOCALAPPDATA + '/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/0.15.4_0');
@@ -30,7 +32,9 @@ function createWindow() {
         slashes: true
     });
 
-    //console.log(`loading file at ${startUrl}`);
+    devMode = process.env.ELECTRON_START_URL;
+
+    console.log(`${devMode ? `DevMode: ` : `Build Mode:`}loading file at ${startUrl}`);
     // and load the index.html of the app.
     mainWindow.loadURL(startUrl);
     // Add the react tools and Open the DevTools.
@@ -79,10 +83,10 @@ ipcMain.on('window_ready', () => {
             return;
         }
         console.log(`Main: Good DropBox Path:${dropbox.business.path}\\`);
-        mainWindow.webContents.send('dropbox', `${dropbox.business.path}\\`);
+        mainWindow.webContents.send('dropbox', `${devMode ? '' : dropbox.business.path}\\`);
         // launch the renderer process
         // now read the exhibit list into a local object
-        fse.readJSON(`${dropbox.business.path}\\${exhibitDir}${exhibitFile}`, (error, resultObj) => {
+        fse.readJSON(`${devMode ? `.\\public\\`: `${dropbox.business.path}\\${exhibitDir}`}${exhibitFile}`, (error, resultObj) => {
             if (error) console.log(error);
             exhibitList = resultObj;
             mainWindow.webContents.send('new_folder', exhibitList);
