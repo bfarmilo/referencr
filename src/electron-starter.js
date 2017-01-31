@@ -15,7 +15,7 @@ let devMode = false;
 
 
 function createWindow() {
-    BrowserWindow.addDevToolsExtension(process.env.LOCALAPPDATA + '/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/0.15.4_0');
+    BrowserWindow.addDevToolsExtension(process.env.LOCALAPPDATA + '/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/0.15.5_0');
     // Create the browser window.
     mainWindow = new BrowserWindow(
         { 
@@ -83,8 +83,8 @@ ipcMain.on('window_ready', () => {
             return;
         }
         console.log(`Main: Good DropBox Path:${dropbox.business.path}\\`);
-        mainWindow.webContents.send('dropbox', `${devMode ? '' : dropbox.business.path}\\`);
-        // launch the renderer process
+        // send the full path to the exhibitfile to the renderer window, used to locate files
+        mainWindow.webContents.send('exhibitpath', `${devMode ? '.\\public\\' : `${dropbox.business.path}\\${exhibitDir}`}`);
         // now read the exhibit list into a local object
         fse.readJSON(`${devMode ? `.\\public\\`: `${dropbox.business.path}\\${exhibitDir}`}${exhibitFile}`, (error, resultObj) => {
             if (error) console.log(error);

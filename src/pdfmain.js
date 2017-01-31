@@ -1,7 +1,7 @@
 import  React  from  'react';
 import  PDFJS  from  'pdfjs-dist/build/pdf.js';
-import { textLayerBuilder } from 'pdfjs-dist/web/pdf_viewer.js'; 
-import logo from './logo.svg';
+import { PDFPageView, DefaultTextLayerFactory, DefaultAnnotationLayerFactory } from 'pdfjs-dist/web/pdf_viewer.js'; 
+//import logo from './logo.svg';
 //import {svgparse, clickedLine} from './svgparse.js';
 import clickedLine from './svgparse.js'
 
@@ -10,6 +10,9 @@ let lastdrawn = 0; //Viewer.state.lastdrawn
 //let lastload = 0; //Viewer.state.lastload
 let viewheight = []; //pdf.state.height
 //let lineArray = []; //page.state.linepositions
+let textLayerDiv = '';
+let pageIndex = 0;
+
 
 //-----------------------------------------------------------------------------
 
@@ -32,6 +35,7 @@ class PDF extends React.Component {
   componentDidMount() {
     PDFJS.getDocument(this.props.src).then((pdf) => {
       this.setState({ pdf });
+      this.props.totalPages(pdf.pdfInfo.numPages);
     });
   }
 
@@ -42,6 +46,7 @@ class PDF extends React.Component {
       this.setState ({pdf: null}); // do this to make sure the promise has time to resolve before re-rendering
       PDFJS.getDocument(nextProps.src).then((pdf) => {
         this.setState({ pdf });
+        this.props.totalPages(pdf.pdfInfo.numPages);
       });
     }
   }
@@ -69,7 +74,7 @@ PDF.childContextTypes = {
   scale: React.PropTypes.number,
 }
 
-//--------------------------------------------------------------------------
+/*//--------------------------------------------------------------------------
 
 class PlaceHolder extends React.Component {
 
@@ -81,7 +86,7 @@ class PlaceHolder extends React.Component {
   }
 }
 
-//--------------------------------------------------------------------------
+*/ //--------------------------------------------------------------------------
 
 class Page extends React.Component {
   constructor(props) {
@@ -91,7 +96,8 @@ class Page extends React.Component {
       page: null,
       width: 0,
       height: 0,
-      linepositions: []
+      offsetTop: 0,
+      offsetLeft: 0
     }
   }
   shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -153,6 +159,29 @@ class Page extends React.Component {
     //this.setState({ status: 'rendered', page: null, width, height })
 
   }
+  
+  // experimental use of PDF viewer
+  _renderView(page) {
+    // Creating the page view with default parameters.
+    let { scale } = this.context;
+    let viewport = page.getViewport(scale);
+    let { width, height } = viewport;
+    let container = this.refs.page1;
+    let pdfPageView = new PDFPageView({
+      container: container,
+      id: this.props.index,
+      scale: scale,
+      defaultViewport: viewport,
+      // We can enable text/annotations layers, if needed
+      textLayerFactory: new DefaultTextLayerFactory(),
+      annotationLayerFactory: new DefaultAnnotationLayerFactory()
+    });
+    // Associates the actual page with the view, and drawing it
+    pdfPageView.setPdfPage(page);
+    pdfPageView.draw();
+
+    this.setState({ status: 'rendered', page, width, height })
+  }
 
   _renderPage(page) {
     let { scale } = this.context;
@@ -162,6 +191,10 @@ class Page extends React.Component {
     let context = canvas.getContext('2d');
     canvas.width = width;
     canvas.height = height;
+    let offsetTop = canvas.offsetTop;
+    let offsetLeft = canvas.offsetLeft;
+
+    console.log(`canvas offsets ${offsetTop} ${offsetLeft}`);
 
     //let canvasOffset = canvas.offset();
     //let textLayerDiv = this.refs.textlayer;
@@ -175,11 +208,13 @@ class Page extends React.Component {
     console.log(`Page: added page height ${height}, calling for update`);
     this.props.getPageHeight(viewheight);
     
-    /*
-    PDFJS.getTextContent(page).then(function(textContent){
-      let textLayer = new TextLayerBuilder({
-          textLayerDiv : textLayerDiv.get(0),
-          pageIndex : page_num - 1,
+    /*textLayerDiv = this.refs.textlayer;
+    pageIndex = this.props.index -1 ;
+    
+    page.getTextContent().then(function(textContent){
+      let textLayer = new textLayerBuilder({
+          textLayerDiv : textLayerDiv,
+          pageIndex : pageIndex,
           viewport : viewport
       });
 
@@ -187,7 +222,7 @@ class Page extends React.Component {
       textLayer.render();
     });
     */
-    this.setState({ status: 'rendered', page, width, height })
+    this.setState({ status: 'rendered', page, width, height, offsetTop, offsetLeft })
   }
 
   /*
@@ -223,12 +258,12 @@ class Page extends React.Component {
   }
 */
   render() {
-    let { width, height, status } = this.state
+    let { width, height, status, offsetLeft, offsetTop } = this.state
     let mountpoint = <canvas ref="canvas" onMouseDown={(e) => this._handleClick(e)} onMouseUp={(e) => this._handleClick(e)} />
-    //let textmountpoint = <div ref="textlayer" height={height} width={width} top={canvasOffset.top} left={canvasOffset.left}> </div>
+    //let textmountpoint = <div ref="textlayer" style={{top: offsetTop, left: offsetLeft, width, height }}>Testing text overlay positioning</div>
 
     return (
-      <div className={`pdf-page ${status}`} style={{ width, height }}>
+      <div ref={this.props.id} className={`pdf-page ${status}`} style={{ width, height }}>
         {mountpoint}
       </div>
     )
@@ -253,8 +288,8 @@ class Viewer extends React.Component {
 
   componentWillReceiveProps(newProps) {
 
-    if (newProps.exhibit !== this.props.exhibit) {
-      console.log(`Viewer: will receive new exhibit ${newProps.exhibit}`);
+    if (newProps.src !== this.props.src) {
+      console.log(`Viewer: will receive new exhibit at path ${newProps.src}`);
       viewheight = [];
       lastdrawn = 0;
       this.setState({ lastload: newProps.pages })
@@ -287,7 +322,7 @@ class Viewer extends React.Component {
     }
 
     return (
-      <div className='pdf-viewer'>
+      <div className='pdf-viewer' ref='viewer'>
         {pages}
       </div>
     )
@@ -302,15 +337,24 @@ class MyPdfViewer extends React.Component {
   constructor(props) {
     super(props);
     this.getNewHeight = this.getNewHeight.bind(this);
+    this.getNumPages = this.getNumPages.bind(this);
   }
 
   getNewHeight(newHeight) {
     this.props.onNewHeight(newHeight);
   }
 
+  getNumPages(numPages) {
+    this.props.getPages(numPages);
+  }
+
   render() {
+    let fileToLoad = this.props.exhibit.file;
+    if (Array.isArray(fileToLoad)) {
+      fileToLoad = fileToLoad[this.props.fileOffset];
+    }
     return (
-      <PDF exhibit={this.props.exhibit.exhibit} src={this.props.exhibit.path} pages={this.props.pages} offset={this.props.exhibit.offset} newViewerHeight={this.getNewHeight} />
+      <PDF src={`${this.props.rootpath}${fileToLoad}`} pages={this.props.pages} offset={this.props.startpage} newViewerHeight={this.getNewHeight} totalPages={this.getNumPages}/>
     )
   }
 }

@@ -13,7 +13,9 @@ let topHeight = 0;
 let scrollPos = 0;
 let totalHeight = 5000;
 let status = "ready";
-let dropboxpath='';
+let exhibitpath='';
+let filetoLoad = 0;
+let oldFiletoLoad = 0;
 
 class Controls extends React.Component {
   //includes controls for clipping text
@@ -40,12 +42,14 @@ class App extends Component {
     this.state = {
       activeExhibit: "meta",
       pages: 2,
+      numPages: 2,
       exhibits: {}
     }
     this.handleNewFile = this.handleNewFile.bind(this);
     this.checkScroll = this.checkScroll.bind(this);
     this.updateWindowHeight = this.updateWindowHeight.bind(this);
     this.handleNewDir = this.handleNewDir.bind(this);
+    this.getTotalPages = this.getTotalPages.bind(this);
   }
 
   componentDidMount() {
@@ -54,9 +58,9 @@ class App extends Component {
       //console.log(`App: received data from Main process with exhibits`, exlist);
       this.handleNewDir(exlist);
     });
-    ipcRenderer.on('dropbox', (event, dbpath) => {
-      console.info(`App: got dropbox path ${dbpath}`)
-      dropboxpath = dbpath;
+    ipcRenderer.on('exhibitpath', (event, expath) => {
+      console.info(`App: got exhibit path ${expath}`)
+      exhibitpath = expath;
     })
     //console.log(`App: sending ready message to main process`);
     ipcRenderer.send('window_ready');
@@ -64,25 +68,48 @@ class App extends Component {
 
   handleNewDir(exhibits) {
       this.setState({exhibits});
-      console.info(`App: received request for updating exhibits path ${dropboxpath}${this.state.exhibits.meta.path} state`, exhibits);
+      console.info(`App: received request for updating exhibits path ${exhibitpath} state`, exhibits);
   }
 
   handleNewFile(exhibitKey) {
     //totalHeight = resetHeight;
-    document.body.scrollTop = 0;
+    document.body.scrollTop = 2;
     topHeight = 0;
     status = 'newFile';
     console.info(`App: new exhibit request received: ${exhibitKey}, status = ${status}`);
     this.setState({ activeExhibit: exhibitKey, pages: 2 });
+    filetoLoad = 0;
+    oldFiletoLoad = 0;
+  }
+
+  getTotalPages(numPages) {
+    console.log(`App: Total pages in file is ${numPages}`);
+    this.setState({numPages});
   }
 
   checkScroll(event) {
     scrollPos = document.body.scrollTop;
-    console.info(`scrolling ${scrollPos} / ${totalHeight}`)
-    if (status !== 'loading' && (scrollPos > totalHeight)) {
-      status = 'loading';
-      console.info(`page jump requested:`, scrollPos, totalHeight)
-      this.setState({ pages: (this.state.pages + pageJump) });
+    console.info(`scrolling ${scrollPos} / ${totalHeight}`);
+    let pageToLoad = this.state.pages;
+    if (status !== 'loading') {
+      if (pageToLoad >= this.state.numPages) {
+        if (Array.isArray(this.state.exhibits[this.state.activeExhibit].file) && oldFiletoLoad < this.state.exhibits[this.state.activeExhibit].file.length-1) {
+            filetoLoad = oldFiletoLoad + 1;
+            totalHeight = document.getElementById('Viewer-area').offsetHeight - window.outerHeight;
+            console.log(`next jump is for next part of multi-part exhibit ${filetoLoad+1}/${this.state.exhibits[this.state.activeExhibit].file.length}`)
+            pageToLoad = 0;
+        }
+      }
+      if (scrollPos > totalHeight) {
+        status = 'loading';
+        console.info(`page jump requested:`, scrollPos, totalHeight)
+        pageToLoad+=pageJump;
+        this.setState({ pages: pageToLoad });  
+        if (oldFiletoLoad !== filetoLoad) oldFiletoLoad = filetoLoad;     
+      }
+      if (scrollPos === 0) {
+        // condition where scrollPos = 0, and previous page not loaded
+      }
     }
   }
 
@@ -113,7 +140,7 @@ class App extends Component {
     if (this.state.exhibits.hasOwnProperty("meta")) {
       editTop = <div className="Edit-top">{this.state.exhibits.meta.matter.IPR} (patent {Number(this.state.exhibits.meta.matter.Patent).toLocaleString()})</div>;
       editor = <MyEditor onUserInput={this.handleNewFile} exhibitfile={this.state.exhibits} />;
-      viewer = <MyPdfViewer pages={this.state.pages} onNewHeight={this.updateWindowHeight} rootpath={`${dropboxpath}${this.state.exhibits.meta.path}`} exhibit={this.state.exhibits[this.state.activeExhibit]} />;
+      viewer = <MyPdfViewer fileOffset={filetoLoad} pages={this.state.pages} getPages={this.getTotalPages} onNewHeight={this.updateWindowHeight} rootpath={exhibitpath} exhibit={this.state.exhibits[this.state.activeExhibit]} startpage={this.state.exhibits[this.state.activeExhibit].offset ? this.state.exhibits[this.state.activeExhibit].offset : 0}/>;
     }
     return (
       <div className="App">
