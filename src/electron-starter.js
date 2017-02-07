@@ -12,8 +12,6 @@ let dropBoxPath = '';
 let exhibitList = {};
 let screenWidth = 0;
 let screenHeight = 0;
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 let openExhibits = new Map();
 let devMode = false;
@@ -78,7 +76,7 @@ function createWindow() {
     }
 
     mainWindow.on('close', (e) => {
-        // probably need to catch a 'close' and put all of the other windows down first
+        // catch a 'close' of the main window and put all of the other windows down first
         console.log(`Main: closing application${openExhibits.size > 0 ? `, first closing ${openExhibits.size} Exhibits` : ''}`);
         if (openExhibits.size > 0) {
             openExhibits.forEach( (win, ex) => {
@@ -91,10 +89,7 @@ function createWindow() {
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function () {
-        // Dereference the window object, usually you would store windows
-        // in an array if your app supports multi windows, this is the time
-        // when you should delete the corresponding element.
-
+        // Dereference the window object
         mainWindow = null
     })
 }
@@ -121,16 +116,14 @@ app.on('activate', function () {
     }
 });
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
+// ipc events
 
+// when the react app is ready it will send this ipc call
 ipcMain.on('window_ready', () => {
-    // main process
     console.log(`Main: received window ready message from renderer window`);
     // send the full path to the exhibitfile to the renderer window, used to locate files
     mainWindow.webContents.send('exhibitpath', `${devMode ? '.\\public\\' : `${dropBoxPath}${exhibitDir}`}`);
     // now read the exhibit list into a local object
-
     fse.readJSON(`${devMode ? `.\\public\\` : `${dropBoxPath}${exhibitDir}`}${exhibitFile}`, (error, resultObj) => {
         if (error) console.log(error);
         exhibitList = resultObj;
@@ -139,12 +132,11 @@ ipcMain.on('window_ready', () => {
     });
 });
 
-
+// when the react app selects a PDF for viewing, this ipc call is trapped
 ipcMain.on('select_viewer', (event, exhibitNo) => {
     console.log(`Main: received call to activate pdf viewer window for ${exhibitList[exhibitNo].file}`);
     let alreadyOpen = false;
-    // check to see if window already opened - if so just give it the focus
-    
+    // check to see if window already opened - if so just give it the focus 
     if (openExhibits.has(exhibitNo)) {
         console.log(`Main: match found with id ${openExhibits.get(exhibitNo).id}`)
         BrowserWindow.fromId(openExhibits.get(exhibitNo).id).focus();
@@ -154,7 +146,7 @@ ipcMain.on('select_viewer', (event, exhibitNo) => {
     if (!alreadyOpen) {
         //else open new window
         console.log(`Main: screen size ${screenWidth}x${screenHeight}: x position ${screenWidth - 768} height ${screenHeight - 50}`);
-
+        // create the new browserwindow object
         const viewerWindow = new PDFWindow({
             width: 768,
             height: screenHeight - 50,
@@ -167,18 +159,18 @@ ipcMain.on('select_viewer', (event, exhibitNo) => {
                 webSecurity: false
             }
         })
-        
+        // trap any attempt to change the window title
         viewerWindow.on('page-title-updated', (event) => {
-            // don't let the window override the title
             event.preventDefault();
         });
 
-        // Emitted when the window is closed.
+        // When the exhibit is closed, delete it from the map of open exhibits
         viewerWindow.on('closed', function () {
             console.log(`Main: window closed: ${exhibitNo}`);
             openExhibits.delete(exhibitNo);
         });
 
+        // now open the window
         viewerWindow.loadURL(`${dropBoxPath}${exhibitDir}${exhibitList[exhibitNo].file}${exhibitList[exhibitNo].hasOwnProperty('offset') ? `#page=${exhibitList[exhibitNo].offset}` : ''}`);
         // viewerWindow.webContents.openDevTools();
         openExhibits.set(exhibitNo, viewerWindow);
