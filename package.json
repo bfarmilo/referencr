@@ -19,5 +19,8 @@
         "eject": "react-scripts eject",
         "electron": "electron .",
         "electron-dev": "set ELECTRON_START_URL=http://localhost:3000 && electron ."
-    }
+    },
+    "repository": "https://github.com/bfarmilo/referencr.git",
+    "author": "bfarmilo <bill@farmilostrategy.com>",
+    "license": "MIT"
 }

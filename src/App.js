@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import MyPdfViewer from './pdfmain';
 import MyEditor from './editormain';
 import './App.css';
-import '../node_modules/pdfjs-dist/web/pdf_viewer.css';
 
 const electron = window.require('electron');
 const ipcRenderer = electron.ipcRenderer;
@@ -77,9 +76,11 @@ class App extends Component {
     topHeight = 0;
     status = 'newFile';
     console.info(`App: new exhibit request received: ${exhibitKey}, status = ${status}`);
-    this.setState({ activeExhibit: exhibitKey, pages: 2 });
+    //this.setState({ activeExhibit: exhibitKey, pages: 2 });
     filetoLoad = 0;
     oldFiletoLoad = 0;
+    console.info(`App: trying to spawn new viewer window for ${exhibitKey}`)
+    ipcRenderer.send('select_viewer', exhibitKey);
   }
 
   getTotalPages(numPages) {

@@ -263,7 +263,7 @@ class Page extends React.Component {
     //let textmountpoint = <div ref="textlayer" style={{top: offsetTop, left: offsetLeft, width, height }}>Testing text overlay positioning</div>
 
     return (
-      <div ref={this.props.id} className={`pdf-page ${status}`} style={{ width, height }}>
+      <div ref={this.props.id} className={`pdf-page ${status}`} style={{ width, height, "padding-left":`${width<1066 ? 0.5*(1066-width) : 0}px` }}>
         {mountpoint}
       </div>
     )
