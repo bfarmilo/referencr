@@ -1,3 +1,6 @@
+//TODO: clean this up. Stop the file from re-loading at the start when a PDF comes up. 
+// Replace custom React PDF with standard PDF viewer window.
+
 import React, { Component } from 'react';
 
 import MyPdfViewer from './pdfmain';

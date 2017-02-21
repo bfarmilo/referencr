@@ -18,7 +18,7 @@ let devMode = false;
 
 console.log(`did exhibitDir get passed as a command-line argument ? ${exhibitDir === 'undefined\\' ? 'no' : 'yes'}`);
 
-// get dropbox path if exhibitDir is specified
+// get dropbox path if exhibitDir is passed as an argument
 if (exhibitDir !== 'undefined\\') {
     fse.readJSON(`${process.env.LOCALAPPDATA}//Dropbox//info.json`, 'utf8', (err2, dropbox) => {
         if (err2) {
@@ -34,7 +34,7 @@ if (exhibitDir !== 'undefined\\') {
 function createWindow() {
     screenWidth = electron.screen.getPrimaryDisplay().workAreaSize.width;
     screenHeight = electron.screen.getPrimaryDisplay().workAreaSize.height;
-    //BrowserWindow.addDevToolsExtension(process.env.LOCALAPPDATA + '/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/0.15.6_0');
+    BrowserWindow.addDevToolsExtension(process.env.LOCALAPPDATA + '/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/0.15.7_0');
     // Create the browser window.
     mainWindow = new BrowserWindow(
         {
@@ -84,14 +84,13 @@ function createWindow() {
                 win.close();
             });
         }
-
     });
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function () {
         // Dereference the window object
         mainWindow = null
-    })
+    });
 }
 
 // This method will be called when Electron has finished
