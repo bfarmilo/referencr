@@ -1,4 +1,7 @@
 // takes an exhibit list (in plaintext) and directory as input and creates an exhibitlist.json file in the /public folder
+// USAGE: navigate to \src folder. clip path from \PMC Public -> folder containing the exhibitlist.json (not including trailing \). node getexhibits.js "path not including dropbox"
+
+
 //metadata includes
 /*  "meta": {
         "matter": {

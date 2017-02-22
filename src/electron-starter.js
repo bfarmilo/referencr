@@ -34,7 +34,7 @@ if (exhibitDir !== 'undefined\\') {
 function createWindow() {
     screenWidth = electron.screen.getPrimaryDisplay().workAreaSize.width;
     screenHeight = electron.screen.getPrimaryDisplay().workAreaSize.height;
-    BrowserWindow.addDevToolsExtension(process.env.LOCALAPPDATA + '/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/0.15.7_0');
+    // BrowserWindow.addDevToolsExtension(process.env.LOCALAPPDATA + '/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/2.0.12_0');
     // Create the browser window.
     mainWindow = new BrowserWindow(
         {
