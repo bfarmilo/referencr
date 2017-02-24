@@ -1,6 +1,6 @@
 import  React  from  'react';
 import  PDFJS  from  'pdfjs-dist/build/pdf.js';
-import { PDFPageView, DefaultTextLayerFactory, DefaultAnnotationLayerFactory } from 'pdfjs-dist/web/pdf_viewer.js'; 
+//import { PDFPageView, DefaultTextLayerFactory, DefaultAnnotationLayerFactory } from 'pdfjs-dist/web/pdf_viewer.js'; 
 //import logo from './logo.svg';
 //import {svgparse, clickedLine} from './svgparse.js';
 import clickedLine from './svgparse.js'
@@ -161,6 +161,7 @@ class Page extends React.Component {
   }
   
   // experimental use of PDF viewer
+  /*
   _renderView(page) {
     // Creating the page view with default parameters.
     let { scale } = this.context;
@@ -182,6 +183,7 @@ class Page extends React.Component {
 
     this.setState({ status: 'rendered', page, width, height })
   }
+  */
 
   _renderPage(page) {
     let { scale } = this.context;

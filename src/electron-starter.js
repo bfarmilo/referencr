@@ -1,3 +1,11 @@
+//TODO: modify exhibit handler to deal with file arrays (open all files simultaneously ?)
+//TODO: modify exhibit handler to deal with offsets (save last page as offset ?)
+//TODO: allow resizing of PDF windows, or resize to better default zoom level (landscape width and height/width zoom level)
+//TODO: allow search exhibits by alias
+//TODO: add an alias and a default offset to the exhibitList.json
+//TODO: make exhibitlist generator more complete, take offline
+//TODO: Better start screen so people know what to do
+
 const electron = require('electron');
 const { app, ipcMain, BrowserWindow, dialog } = electron;
 const { PDFWindow, getHighlightCoords } = require('./processtext');
@@ -5,6 +13,8 @@ const { PDFWindow, getHighlightCoords } = require('./processtext');
 const path = require('path');
 const url = require('url');
 const fse = require('fs-extra');
+
+const defaultWidth=1024;
 
 let exhibitFile = 'exhibitlist.json';
 let exhibitDir = `${process.argv[2]}\\`;
@@ -44,7 +54,8 @@ function createWindow() {
             y: 50,
             webPreferences: {
                 webSecurity: false
-            }
+            },
+            icon: path.join(__dirname, '/../public/icon.ico')
         });
 
     const startUrl = process.env.ELECTRON_START_URL || url.format({
@@ -65,7 +76,7 @@ function createWindow() {
             // and load the index.html of the app.
             mainWindow.loadURL(startUrl);
             // Add the react tools and Open the DevTools.
-            // mainWindow.webContents.openDevTools();
+            mainWindow.webContents.openDevTools();
         });
     } else {
         console.log(`Main: ${devMode ? `DevMode ` : `Build Mode `}loading file at ${startUrl}`);
@@ -127,6 +138,7 @@ ipcMain.on('window_ready', () => {
         if (error) console.log(error);
         exhibitList = resultObj;
         mainWindow.webContents.send('new_folder', exhibitList);
+        mainWindow.title = `${exhibitList.meta.matter.Patent} ${exhibitList.meta.matter.Party} ${exhibitList.meta.doctype}`;
         console.log(`Main: exhibitList sent to render window`);
     });
 });
@@ -144,19 +156,20 @@ ipcMain.on('select_viewer', (event, exhibitNo) => {
 
     if (!alreadyOpen) {
         //else open new window
-        console.log(`Main: screen size ${screenWidth}x${screenHeight}: x position ${screenWidth - 768} height ${screenHeight - 50}`);
+        console.log(`Main: screen size ${screenWidth}x${screenHeight}: x position ${screenWidth - defaultWidth} height ${screenHeight - 50}`);
         // create the new browserwindow object
         const viewerWindow = new PDFWindow({
-            width: 768,
+            width: defaultWidth,
             height: screenHeight - 50,
-            x: screenWidth - 768,
+            x: screenWidth - defaultWidth,
             y: 50,
             title: `${exhibitNo} - ${exhibitList[exhibitNo].alias || exhibitList[exhibitNo].title}`,
             transparent: true,
             autoHideMenuBar: true,
             webPreferences: {
                 webSecurity: false
-            }
+            },
+            icon: path.join(__dirname, '/../public/icon.ico')
         })
         // trap any attempt to change the window title
         viewerWindow.on('page-title-updated', (event) => {
