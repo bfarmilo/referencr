@@ -7,14 +7,17 @@
 //TODO: Better start screen so people know what to do
 
 const electron = require('electron');
-const { app, ipcMain, BrowserWindow, dialog } = electron;
+const { app, ipcMain, BrowserWindow, dialog, shell, Menu } = electron;
 const { PDFWindow, getHighlightCoords } = require('./processtext');
 
 const path = require('path');
 const url = require('url');
 const fse = require('fs-extra');
+const os = require('os');
 
 const defaultWidth=1024;
+const mainPage = `file://${__dirname}/mdedit.html`
+//mainPage is the markdownify page
 
 let exhibitFile = 'exhibitlist.json';
 let exhibitDir = `${process.argv[2]}\\`;
@@ -76,7 +79,7 @@ function createWindow() {
             // and load the index.html of the app.
             mainWindow.loadURL(startUrl);
             // Add the react tools and Open the DevTools.
-            mainWindow.webContents.openDevTools();
+            // mainWindow.webContents.openDevTools();
         });
     } else {
         console.log(`Main: ${devMode ? `DevMode ` : `Build Mode `}loading file at ${startUrl}`);
@@ -102,7 +105,132 @@ function createWindow() {
         // Dereference the window object
         mainWindow = null
     });
+//Set native menubar
+  var template = [
+    {
+      label: "&File",
+      submenu: [
+        {label: "New", accelerator: "CmdOrCtrl+N", click: () => {
+          var focusedWindow = BrowserWindow.getFocusedWindow();
+          focusedWindow.webContents.send('file-new');
+        }},
+        {label: "Open", accelerator: "CmdOrCtrl+O", click: () => {
+          let focusedWindow = BrowserWindow.getFocusedWindow();
+          focusedWindow.webContents.send('file-open');
+        }},
+        {label: "Save", accelerator: "CmdOrCtrl+S", click: () => {
+          let focusedWindow = BrowserWindow.getFocusedWindow();
+          focusedWindow.webContents.send('file-save');
+        }},
+        {label: "Save As", accelerator: "CmdOrCtrl+Shift+S", click: () => {
+          var focusedWindow = BrowserWindow.getFocusedWindow();
+          focusedWindow.webContents.send('file-save-as');
+        }},
+        {label: "Save As PDF", accelerator: "CmdOrCtrl+Shift+P", click: () => {
+          focusedWindow.webContents.send('file-pdf');
+        }},
+        {label: "Quit", accelerator: "Command+Q", click: app.quit}
+      ]
+    },
+    {
+      label: "&Edit",
+      submenu: [
+        {label: "Undo", accelerator: "CmdOrCtrl+Z", role: "undo"},
+        {label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", role: "redo"},
+        {type: "separator"},
+        {label: "Cut", accelerator: "CmdOrCtrl+X", role: "cut"},
+        {label: "Copy", accelerator: "CmdOrCtrl+C", role: "copy"},
+        {label: "Paste", accelerator: "CmdOrCtrl+V", role: "paste"},
+        {label: "Select All", accelerator: "CmdOrCtrl+A", role: 'selectall'},
+        {type: "separator"},
+        {label: "Search", accelerator: "CmdOrCtrl+F", click: () => {
+          let focusedWindow = BrowserWindow.getFocusedWindow();
+          focusedWindow.webContents.send('ctrl+f');
+        }},
+        {label: "Replace", accelerator: "CmdOrCtrl+Shift+F", click: () => {
+          let focusedWindow = BrowserWindow.getFocusedWindow();
+          focusedWindow.webContents.send('ctrl+shift+f');
+        }}
+      ]
+    },
+    {
+      label: "&View",
+      submenu: [
+        {label: "Toggle Full Screen", accelerator:"F11", click: () => {
+          let focusedWindow = BrowserWindow.getFocusedWindow();
+          let isFullScreen = focusedWindow.isFullScreen();
+          focusedWindow.setFullScreen(!isFullScreen);
+        }}
+      ]
+    },
+    {
+      label: "&Help",
+      submenu: [
+        {label: "Documentation", click:  () => {
+          shell.openExternal(Config.repository.docs);
+        }},
+        {label: "Report Issue", click: () => {
+          shell.openExternal(Config.bugs.url);
+        }},
+        {label: "About Markdownify", click: () => {
+          dialog.showMessageBox({title: "About Markdownify", type:"info", message: "A minimal Markdown Editor desktop app. \nMIT Copyright (c) 2016 Amit Merchant <bullredeyes@gmail.com>", buttons: ["Close"] });
+        }}
+      ]
+    }
+  ];
+
+  ipcMain.on('print-to-pdf', (event, filePath) => {
+
+    const win = BrowserWindow.fromWebContents(event.sender)
+    // Use default printing options
+    win.webContents.printToPDF({pageSize: 'A4'}, (error, data) => {
+      if (error) throw error
+      fs.writeFile(filePath, data, (error) => {
+        if (error) {
+          throw error
+        }
+      })
+    })
+
+  });
+
+  Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+
+  // Registering shortcuts for formatting markdown
+  var focusedWindow = BrowserWindow.getFocusedWindow();
+  localShortcut.register('CmdOrCtrl+b', () => {
+      focusedWindow.webContents.send('ctrl+b');
+  });
+
+  localShortcut.register('CmdOrCtrl+i', () => {
+      focusedWindow.webContents.send('ctrl+i');
+  });
+
+  localShortcut.register('CmdOrCtrl+/', () => {
+      focusedWindow.webContents.send('ctrl+/');
+  });
+
+  localShortcut.register('CmdOrCtrl+l', () => {
+      focusedWindow.webContents.send('ctrl+l');
+  });
+
+  localShortcut.register('CmdOrCtrl+h', () => {
+      focusedWindow.webContents.send('ctrl+h');
+  });
+
+  localShortcut.register('CmdOrCtrl+Alt+i', () => {
+      focusedWindow.webContents.send('ctrl+alt+i');
+  });
+
+  localShortcut.register('CmdOrCtrl+Shift+t', () => {
+      focusedWindow.webContents.send('ctrl+shift+t');
+  });
+
+  tray.create(mainWindow);
 }
+
+
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -127,6 +255,8 @@ app.on('activate', function () {
 });
 
 // ipc events
+
+
 
 // when the react app is ready it will send this ipc call
 ipcMain.on('window_ready', () => {

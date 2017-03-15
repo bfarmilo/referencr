@@ -62,7 +62,7 @@
         "test": "node scripts/test.js --env=jsdom",
         "electron": "electron .",
         "electron-dev": "set ELECTRON_START_URL=http://localhost:3000 && electron .",
-        "package-win": "electron-packager ./ \"Brief Viewer\" --overwrite --asar=true --platform=win32 --arch=x64 --icon=public/icon.ico --prune=true --out=/release-builds --version-string.CompanyName=PMCIP --version-string.FileDescription=\"Exhibit Viewer\" --version-string.ProductName=\"Exhibit Viewer\""
+        "package-win": "electron-packager ./ \"Brief Viewer\" --overwrite --asar=true --platform=win32 --arch=x64 --icon=./public/icon.ico --prune=true --out=./release-builds --version-string.CompanyName=PMCIP --version-string.FileDescription=\"Exhibit Viewer\" --version-string.ProductName=\"Exhibit Viewer\""
     },
     "repository": "https://github.com/bfarmilo/referencr.git",
     "author": "bfarmilo <bill@farmilostrategy.com>",
