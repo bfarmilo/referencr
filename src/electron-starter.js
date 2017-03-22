@@ -7,17 +7,15 @@
 //TODO: Better start screen so people know what to do
 
 const electron = require('electron');
-const { app, ipcMain, BrowserWindow, dialog, shell, Menu } = electron;
+const { app, ipcMain, BrowserWindow, dialog } = electron;
 const { PDFWindow, getHighlightCoords } = require('./processtext');
+const exec = require('child_process').exec
 
 const path = require('path');
 const url = require('url');
 const fse = require('fs-extra');
-const os = require('os');
 
 const defaultWidth=1024;
-const mainPage = `file://${__dirname}/mdedit.html`
-//mainPage is the markdownify page
 
 let exhibitFile = 'exhibitlist.json';
 let exhibitDir = `${process.argv[2]}\\`;
@@ -105,132 +103,7 @@ function createWindow() {
         // Dereference the window object
         mainWindow = null
     });
-//Set native menubar
-  var template = [
-    {
-      label: "&File",
-      submenu: [
-        {label: "New", accelerator: "CmdOrCtrl+N", click: () => {
-          var focusedWindow = BrowserWindow.getFocusedWindow();
-          focusedWindow.webContents.send('file-new');
-        }},
-        {label: "Open", accelerator: "CmdOrCtrl+O", click: () => {
-          let focusedWindow = BrowserWindow.getFocusedWindow();
-          focusedWindow.webContents.send('file-open');
-        }},
-        {label: "Save", accelerator: "CmdOrCtrl+S", click: () => {
-          let focusedWindow = BrowserWindow.getFocusedWindow();
-          focusedWindow.webContents.send('file-save');
-        }},
-        {label: "Save As", accelerator: "CmdOrCtrl+Shift+S", click: () => {
-          var focusedWindow = BrowserWindow.getFocusedWindow();
-          focusedWindow.webContents.send('file-save-as');
-        }},
-        {label: "Save As PDF", accelerator: "CmdOrCtrl+Shift+P", click: () => {
-          focusedWindow.webContents.send('file-pdf');
-        }},
-        {label: "Quit", accelerator: "Command+Q", click: app.quit}
-      ]
-    },
-    {
-      label: "&Edit",
-      submenu: [
-        {label: "Undo", accelerator: "CmdOrCtrl+Z", role: "undo"},
-        {label: "Redo", accelerator: "Shift+CmdOrCtrl+Z", role: "redo"},
-        {type: "separator"},
-        {label: "Cut", accelerator: "CmdOrCtrl+X", role: "cut"},
-        {label: "Copy", accelerator: "CmdOrCtrl+C", role: "copy"},
-        {label: "Paste", accelerator: "CmdOrCtrl+V", role: "paste"},
-        {label: "Select All", accelerator: "CmdOrCtrl+A", role: 'selectall'},
-        {type: "separator"},
-        {label: "Search", accelerator: "CmdOrCtrl+F", click: () => {
-          let focusedWindow = BrowserWindow.getFocusedWindow();
-          focusedWindow.webContents.send('ctrl+f');
-        }},
-        {label: "Replace", accelerator: "CmdOrCtrl+Shift+F", click: () => {
-          let focusedWindow = BrowserWindow.getFocusedWindow();
-          focusedWindow.webContents.send('ctrl+shift+f');
-        }}
-      ]
-    },
-    {
-      label: "&View",
-      submenu: [
-        {label: "Toggle Full Screen", accelerator:"F11", click: () => {
-          let focusedWindow = BrowserWindow.getFocusedWindow();
-          let isFullScreen = focusedWindow.isFullScreen();
-          focusedWindow.setFullScreen(!isFullScreen);
-        }}
-      ]
-    },
-    {
-      label: "&Help",
-      submenu: [
-        {label: "Documentation", click:  () => {
-          shell.openExternal(Config.repository.docs);
-        }},
-        {label: "Report Issue", click: () => {
-          shell.openExternal(Config.bugs.url);
-        }},
-        {label: "About Markdownify", click: () => {
-          dialog.showMessageBox({title: "About Markdownify", type:"info", message: "A minimal Markdown Editor desktop app. \nMIT Copyright (c) 2016 Amit Merchant <bullredeyes@gmail.com>", buttons: ["Close"] });
-        }}
-      ]
-    }
-  ];
-
-  ipcMain.on('print-to-pdf', (event, filePath) => {
-
-    const win = BrowserWindow.fromWebContents(event.sender)
-    // Use default printing options
-    win.webContents.printToPDF({pageSize: 'A4'}, (error, data) => {
-      if (error) throw error
-      fs.writeFile(filePath, data, (error) => {
-        if (error) {
-          throw error
-        }
-      })
-    })
-
-  });
-
-  Menu.setApplicationMenu(Menu.buildFromTemplate(template));
-
-  // Registering shortcuts for formatting markdown
-  var focusedWindow = BrowserWindow.getFocusedWindow();
-  localShortcut.register('CmdOrCtrl+b', () => {
-      focusedWindow.webContents.send('ctrl+b');
-  });
-
-  localShortcut.register('CmdOrCtrl+i', () => {
-      focusedWindow.webContents.send('ctrl+i');
-  });
-
-  localShortcut.register('CmdOrCtrl+/', () => {
-      focusedWindow.webContents.send('ctrl+/');
-  });
-
-  localShortcut.register('CmdOrCtrl+l', () => {
-      focusedWindow.webContents.send('ctrl+l');
-  });
-
-  localShortcut.register('CmdOrCtrl+h', () => {
-      focusedWindow.webContents.send('ctrl+h');
-  });
-
-  localShortcut.register('CmdOrCtrl+Alt+i', () => {
-      focusedWindow.webContents.send('ctrl+alt+i');
-  });
-
-  localShortcut.register('CmdOrCtrl+Shift+t', () => {
-      focusedWindow.webContents.send('ctrl+shift+t');
-  });
-
-  tray.create(mainWindow);
 }
-
-
-
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -256,8 +129,6 @@ app.on('activate', function () {
 
 // ipc events
 
-
-
 // when the react app is ready it will send this ipc call
 ipcMain.on('window_ready', () => {
     console.log(`Main: received window ready message from renderer window`);
@@ -268,32 +139,36 @@ ipcMain.on('window_ready', () => {
         if (error) console.log(error);
         exhibitList = resultObj;
         mainWindow.webContents.send('new_folder', exhibitList);
-        mainWindow.title = `${exhibitList.meta.matter.Patent} ${exhibitList.meta.matter.Party} ${exhibitList.meta.doctype}`;
+        mainWindow.setTitle(`${exhibitList.meta.matter.Patent} ${exhibitList.meta.matter.Party} ${exhibitList.meta.doctype}`);
         console.log(`Main: exhibitList sent to render window`);
     });
 });
 
-// when the react app selects a PDF for viewing, this ipc call is trapped
-ipcMain.on('select_viewer', (event, exhibitNo) => {
-    console.log(`Main: received call to activate pdf viewer window for ${exhibitList[exhibitNo].file}`);
-    let alreadyOpen = false;
-    // check to see if window already opened - if so just give it the focus 
-    if (openExhibits.has(exhibitNo)) {
-        console.log(`Main: match found with id ${openExhibits.get(exhibitNo).id}`)
-        BrowserWindow.fromId(openExhibits.get(exhibitNo).id).focus();
-        alreadyOpen = true;
-    };
+// when the react app wants to open an editor, this ipc call is trapped
+ipcMain.on('open_editor', (event) => {
+    // open VSCode with in a 'Comments' folder
+    console.info(`Main: open editor captured, attempting to open "${dropBoxPath}${exhibitDir}..\\Comments"`)
+    exec(`code "${dropBoxPath}${exhibitDir}..\\Comments"`, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Main: exec error: ${error}`);
+            // fallback if code doesn't open -- open the Comments folder in File Explorer
+            exec(`explorer "${dropBoxPath}${exhibitDir}..\\Comments"`, (e, stdo, stde) => {
+                if (e) console.error(`Main: file explorer error ${e}`);
+            })
+            return;
+        }
+    })
+})
 
-    if (!alreadyOpen) {
-        //else open new window
-        console.log(`Main: screen size ${screenWidth}x${screenHeight}: x position ${screenWidth - defaultWidth} height ${screenHeight - 50}`);
-        // create the new browserwindow object
-        const viewerWindow = new PDFWindow({
+function openPDFWindow(file, winTitle, offset, exhibit, yIdx) {
+    // takes a file argument and opens a window
+    // also stops the title from changing
+            const viewerWindow = new PDFWindow({
             width: defaultWidth,
-            height: screenHeight - 50,
+            height: screenHeight - 50 -(25*yIdx),
             x: screenWidth - defaultWidth,
-            y: 50,
-            title: `${exhibitNo} - ${exhibitList[exhibitNo].alias || exhibitList[exhibitNo].title}`,
+            y: 50 + 25*yIdx,
+            title: winTitle,
             transparent: true,
             autoHideMenuBar: true,
             webPreferences: {
@@ -308,13 +183,47 @@ ipcMain.on('select_viewer', (event, exhibitNo) => {
 
         // When the exhibit is closed, delete it from the map of open exhibits
         viewerWindow.on('closed', function () {
-            console.log(`Main: window closed: ${exhibitNo}`);
-            openExhibits.delete(exhibitNo);
+            console.log(`Main: window closed: ${exhibit}.${yIdx}`);
+            openExhibits.delete(`${exhibit}.${yIdx}`);
         });
 
         // now open the window
-        viewerWindow.loadURL(`${dropBoxPath}${exhibitDir}${exhibitList[exhibitNo].file}${exhibitList[exhibitNo].hasOwnProperty('offset') ? `#page=${exhibitList[exhibitNo].offset}` : ''}`);
+        viewerWindow.loadURL(`${file}`); // TODO figure out page #page=${offset}`);
         // viewerWindow.webContents.openDevTools();
-        openExhibits.set(exhibitNo, viewerWindow);
+        openExhibits.set(`${exhibit}.${yIdx}`, viewerWindow);
+}
+
+// when the react app selects a PDF for viewing, this ipc call is trapped
+ipcMain.on('select_viewer', (event, exhibitNo) => {
+    console.log(`Main: received call to activate pdf viewer window for ${exhibitList[exhibitNo].file}`);
+    let alreadyOpen = false;
+    // check to see if window already opened - if so just give it the focus 
+    if (openExhibits.has(`${exhibitNo}.1`)) {
+        console.log(`Main: match found with id ${openExhibits.get(`${exhibitNo}.1`).id}`)
+        BrowserWindow.fromId(openExhibits.get(`${exhibitNo}.0`).id).focus();
+        alreadyOpen = true;
+    };
+
+    if (!alreadyOpen) {
+        //else open new window
+        console.log(`Main: screen size ${screenWidth}x${screenHeight}: x position ${screenWidth - defaultWidth} height ${screenHeight - 50}`);
+        // convert single files to an array, for easier processing
+        let fileArray = (Array.isArray(exhibitList[exhibitNo].file) ? exhibitList[exhibitNo].file : [].concat(exhibitList[exhibitNo].file)); 
+        // reverse it so the first parts show up on top and are loaded last
+        fileArray.reverse();
+        let part = fileArray.length;
+        console.log(`Main: file Array to open`, fileArray);
+        for (let eachFile of fileArray) {
+            console.log(`Main: opening file ${dropBoxPath}${exhibitDir}${eachFile}`);
+            openPDFWindow(
+                `${dropBoxPath}${exhibitDir}${eachFile}`,
+                `${exhibitNo} - ${exhibitList[exhibitNo].alias || exhibitList[exhibitNo].title}${(part!==0?` Part ${part}`:``)}`,
+                (exhibitList[exhibitNo].hasOwnProperty('offset') ? exhibitList[exhibitNo].offset : 1),
+                exhibitNo,
+                (fileArray.length-part)
+            )
+            part--;
+        }
+        console.log(`Main: currently open windows:`, openExhibits);
     }
 });

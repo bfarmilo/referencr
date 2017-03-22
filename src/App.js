@@ -24,11 +24,16 @@ class Controls extends React.Component {
   //optionally hiding background images
   //also stores state (Exhibit, pageNo, LineStart, LineEnd, CharStart, Charend)
   //
+  buttonOneClicked() {
+    console.log(`App: Button One clicked`);
+    ipcRenderer.send('open_editor');
+  } 
+
   render() {
     return (
       <nav className="Pdf-controls">
         <ul className="Pdf-control-buttons">
-          <li>button1</li>
+          <li onClick={this.buttonOneClicked}>View/Edit Comments</li>
           <li>button2</li>
           <li>button3</li>
         </ul>
