@@ -29,12 +29,17 @@ class Controls extends React.Component {
     ipcRenderer.send('open_editor');
   } 
 
+  buttonTwoClicked() {
+    console.log(`App: Button Two Clicked`);
+    ipcRenderer.send('open_ex_folder');
+  }
+
   render() {
     return (
       <nav className="Pdf-controls">
         <ul className="Pdf-control-buttons">
           <li onClick={this.buttonOneClicked}>View/Edit Comments</li>
-          <li>button2</li>
+          <li onClick={this.buttonTwoClicked}>Open Exhibits Folder</li>
           <li>button3</li>
         </ul>
       </nav>

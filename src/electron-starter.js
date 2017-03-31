@@ -160,6 +160,18 @@ ipcMain.on('open_editor', (event) => {
     })
 })
 
+// when the react app wants to open the Exhibit folder, this ipc call is trapped
+ipcMain.on('open_ex_folder', (event) => {
+    // open File Explorer in the 'Exhibits' folder
+    console.info(`Main: open exhibit folder captured, attempting to open "${dropBoxPath}${exhibitDir}"`)
+    // fallback if code doesn't open -- open the Exhibits folder in File Explorer
+            exec(`explorer "${dropBoxPath}${exhibitDir}"`, (e, stdo, stde) => {
+                if (e) console.error(`Main: file explorer error ${e}`);
+            });
+            return;
+        });
+
+
 function openPDFWindow(file, winTitle, offset, exhibit, yIdx) {
     // takes a file argument and opens a window
     // also stops the title from changing
